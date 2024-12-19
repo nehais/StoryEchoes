@@ -937,7 +937,7 @@ const generateImageWithTimeout = (text) => {
       setRefresh((prev) => prev + 1);
 
       setTimeout(() => {
-      navigate(`/read-story/${responseData.id}?state=new`);
+      navigate(`/readStory/${responseData.id}?state=new`);
       }, 2000);
       } else {
       // Handle server errors
@@ -1298,64 +1298,6 @@ const generateImageWithTimeout = (text) => {
                     </div>
                   )}
                 </div>
-
-                {/* UN-USED MEDIA URL */}
-                {/*
-                <div className="page-media-buttons">
-                  <div
-                    style={{
-                      width: "40%",
-                    }}
-                  >
-                    <input
-                      type="text"
-                      placeholder="Paste media URL"
-                      value={page.mediaUrl || ""}
-                      onChange={(e) => handleMediaUrlInput(e, index)}
-                      onBlur={(e) => handleMediaUrlInput(e, index)}
-                      className="media-field"
-                      style={{
-                        fontFamily: "Bubblegum Sans, cursive",
-                        width: "100%",
-                        backgroundColor: page.mediaUrl ? "gray" : "white", // Greyed out if media URL is provided
-                        opacity: page.mediaUrl ? 0.5 : 1, // Adjust opacity
-                      }}
-                      disabled={!!page.audio} // Disable if audio is provided
-                    />
-                    {page.mediaUrlError && (
-                      <span
-                        className="error"
-                        style={{
-                          fontFamily: "Comic Neuve, cursive",
-                          fontSize: "0.75em",
-                        }}
-                      >
-                        {page.mediaUrlError}
-                      </span>
-                    )}
-                  </div>
-
-                  <div
-                    style={{
-                      alignSelf: "flex-start",
-                    }}
-                  >
-                    
-                    {page.mediaUrl && !page.mediaUrlError && (
-                      <button
-                        type="button"
-                        onClick={() => toggleMediaPlay(index)}
-                        style={{
-                          backgroundColor: "transparent",
-                          padding: "5px 0 0 10px",
-                          border: "none",
-                        }}
-                      >
-                        {page.isPlaying ? "⏸️" : "▶️"}
-                      </button>
-                    )}
-                  </div>
-                </div>*/}
 
                 {/* Media Area */}
                 <div className="page-media-buttons">

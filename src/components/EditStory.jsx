@@ -864,7 +864,7 @@ const generateImageWithTimeout = (text) => {
       //Indicate Context API for refresh
       setRefresh((prev) => prev + 1);
       setTimeout(() => {
-      navigate(`/read-story/${id}`);
+      navigate(`/readStory/${id}`);
       }, 2000);
       } else {
       setBeeMessage("🐝 Oh no! Couldn't save your story. Try again.");

@@ -22,8 +22,7 @@ function App() {
           <Route path="/wonderShelf" element={<WonderShelf />} />
           <Route path="/addStory" element={<AddStory />} />
           <Route path="/who-we-are" element={<Whoweare />} />
-          <Route path="/editstory/:id" element={<EditStory />} />
-          <Route path="/read-story/:id" element={<ReadStory />} />{" "}
+          <Route path="/editStory/:id" element={<EditStory />} />
           {/* Route for reading the story */}
           {/* Updated route to handle dynamic story IDs */}
           <Route path="/readStory/:id" element={<ReadStory />} />

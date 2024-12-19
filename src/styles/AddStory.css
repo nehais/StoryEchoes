@@ -79,32 +79,6 @@ body,
   margin: 0; /* Remove unnecessary margins */
 }
 
-/* Front Cover Field Alignment */
-/* Same class in EditStory.css takes over so this id duplicate
-.front-cover-group {
-  display: flex;
-  flex-direction: column; 
-  justify-content: center;
-  align-items: center; 
-  width: 100%; 
-  max-width: 600px; 
-  margin: 0 auto 15px;
-  text-align: auto; 
-  margin-left: 90px;
-}*/
-
-/* Adjust Label Styling 
-Same class in EditStory.css
-.front-cover-group label {
-  font-size: 1.3rem;
-  margin-bottom: 10px; /* Add spacing below label 
-  color: rgb(104, 223, 201);
-  width: 100%;
-  text-align: left; /* Center label text 
-  margin-left: 190px;
-  margin-top: 25px;
-}*/
-
 /* Front Cover Input Field */
 .front-cover-group input {
   width: 50%; /* Responsive width */
@@ -197,51 +171,6 @@ Same class in EditStory.css
   border-color: rgb(104, 223, 201);
   /* box-shadow: 0 0 5px rgba(0, 61, 153, 0.7); */
 }
-
-/* Pages Section 
-CSS repeated in Edit
-.pages-container {
-  position: relative;
-  padding: 5px;
-  border: 2px solid #28c4ac;
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.9);
-  width: 75%;
-  margin: 15px auto;
-  margin-bottom: 90px;
-}
-
-//Edit CSS repeat
-.page-input-group {
-  position: relative; /* Enable relative positioning for icon placement
-  margin-bottom: 15px;
-}*/
-
-/* Edit CSS repeat
-.page-input-group h3 {
-  font-family: "Bubblegum Sans", cursive;
-  color: #cb33a5;
-}
-
-//Edit CSS repeat
-.page-input-group label {
-  font-size: 0.1 rem;
-  font-family: "Bubblegum Sans", cursive;
-  display: block;
-  margin-bottom: 5px;
-}
-
-//Edit CSS repeat
-.page-input-group input,
-.page-input-group textarea {
-  width: 90%;
-  padding: 10px;
-  border: 2px solid #28c4ac;
-  border-radius: 8px;
-  font-family: "Bubblegum Sans", cursive;
-  background-color: white;
-  color: black;
-}*/
 
 .page-input-group .add-image-icon:hover {
   transform: scale(1.2); /* Slightly larger on hover */

@@ -1,6 +1,6 @@
-// Whoweare.jsx
+// WhoWeAre.jsx
 import { Link } from "react-router-dom";
-import "../styles/Whoweare.css"; // Import your CSS for styling
+import "../styles/WhoWeAre.css"; // Import your CSS for styling
 
 // Make sure the image files are imported
 import Priya from "../assets/dinno.png"; // Import the profile image for Priya
@@ -8,7 +8,7 @@ import Neha from "../assets/dino.png"; // Import the profile image for Neha
 import GitLogo from "../assets/GitHub-logo.jpg";
 import LinkedInLogo from "../assets/LinkedInLogo.png";
 
-function Whoweare() {
+function WhoWeAre() {
   return (
     <>
       <div className="about-main-content">
@@ -84,4 +84,4 @@ function Whoweare() {
   );
 }
 
-export default Whoweare;
+export default WhoWeAre;
