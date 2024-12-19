@@ -1,0 +1,106 @@
+.navbar {
+  height: 10%;
+  width: 100vw;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-family: "Bubblegum Sans";
+  font-size: 1.5em;
+  position: relative;
+  border-bottom: 1px solid slateblue;
+}
+
+.logo-area {
+  width: 100%;
+  margin: 0 20px;
+
+  display: flex;
+  align-items: center;
+}
+
+.app-logo {
+  height: 50px;
+  width: 80px;
+  margin-right: 10px;
+}
+
+.menu-area {
+  margin-right: 20px;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+}
+
+.menu-item {
+  font-size: 0.65em;
+}
+
+.menu-item:hover {
+  color: #535bf2;
+}
+
+.my-picks {
+  color: #dce6e4;
+  cursor: pointer;
+}
+
+.login-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-area h6 {
+  margin: 0;
+}
+
+.signin-button {
+  padding: 5px 10px;
+  border-radius: 15px;
+
+  background-color: white;
+  font-size: 0.65em;
+}
+
+.signedin-button {
+  padding: 2px 5px;
+  font-size: 0.5em;
+}
+
+/*Mobile Screen*/
+@media screen and (max-device-width: 425px) {
+  .navbar {
+    font-size: 1em;
+  }
+
+  .logo-area {
+    margin: 0 5px;
+    flex-direction: column;
+  }
+
+  .app-logo {
+    height: 25px;
+    width: 45px;
+  }
+
+  .menu-area {
+    gap: 10px;
+  }
+}
+
+/* Tablet Screen */
+@media screen and (max-device-width: 768px) and (min-width: 426px) {
+  /* Add tablet-specific styles here if needed */
+  .navbar {
+    font-size: 2em;
+  }
+
+  .menu-area {
+    gap: 15px;
+  }
+}

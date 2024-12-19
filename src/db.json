@@ -1,0 +1,61 @@
+{
+  "stories": [
+    {
+      "id": "fd2e",
+      "title": "The Rooster and the Fox",
+      "Author": "David Todd",
+      "front_cover": "/Storyfd2eimages/front_cover.jpg",
+      "content": [
+        {
+          "page": 1,
+          "text": "In a lush green forest, a red rooster with bright feathers lived happily on a farm. Nearby, a sly red fox with a bushy tail watched the rooster every day, hoping to catch him for a meal. The rooster loved to crow from the top of the barn, feeling proud and safe.",
+          "image": "/Storyfd2eimages/page1.jpg"
+        },
+        {
+          "page": 2,
+          "text": "One sunny morning, the fox decided to trick the rooster. He approached the barn and called out, 'Dear Rooster, I have heard about your beautiful voice. Will you come down and sing for me?' The rooster, being clever, sensed the fox's plan and thought of a way to outsmart him.",
+          "image": "/Storyfd2eimages/page2.jpg"
+        },
+        {
+          "page": 3,
+          "text": "The rooster replied, 'Oh, Mr. Fox, I would love to sing for you, but I am too high up. If you wait a moment, I will come down.' The fox's eyes gleamed with excitement as he waited eagerly. The rooster then said, 'But first, could you close your eyes and count to ten? It will make my song even more magical.'",
+          "image": "/Storyfd2eimages/page3.jpg"
+        },
+        {
+          "page": 4,
+          "text": "The fox, thinking he was about to catch the rooster, closed his eyes and began to count. Meanwhile, the rooster quietly flew down from the barn and quickly ran to the farmer's house. When the fox finished counting and opened his eyes, the rooster was nowhere to be seen.",
+          "image": "/Storyfd2eimages/page4.jpg"
+        },
+        {
+          "page": 5,
+          "text": "The fox was furious and realized he had been tricked. He searched everywhere but couldn't find the rooster. The rooster, safe inside the farmer's house, chuckled to himself. He knew he had outsmarted the fox and saved himself from becoming the fox's meal.",
+          "image": "/Storyfd2eimages/page5.jpg"
+        },
+        {
+          "page": 6,
+          "text": "The rooster learned a valuable lesson that day: always stay alert and use your wits to stay safe. The fox, on the other hand, learned that being cunning doesn't always get you what you want. From then on, the rooster continued to crow proudly from the barn, and the fox kept his distance.",
+          "image": "/Storyfd2eimages/page6.jpg"
+        },
+        {
+          "page": 7,
+          "text": "And so the rooster and the fox lived their lives with new wisdom. The rooster stayed clever and cautious, while the fox learned to respect the intelligence of others. They both found a way to live peacefully, each with their own lessons learned.",
+          "image": "/Storyfd2eimages/page7.jpg"
+        }
+      ]
+    },
+    {
+      "id": "d807",
+      "title": "Lily's Garden Adventures",
+      "Author": "David Todd ",
+      "front_cover": "http://localhost:9000/uploads/1732924813237-page3.jpg",
+      "content": [
+        {
+          "page": 1,
+          "text": "Lily's Garden Adventure is a great book to read. \nLily is a very Brave Girl. ",
+          "image": "http://localhost:9000/uploads/1732934287774-page6.jpg"
+        }
+      ]
+    }
+  ],
+  "interactions": []
+}

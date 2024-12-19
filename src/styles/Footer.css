@@ -1,0 +1,80 @@
+.footer {
+  height: 5%;
+  width: 100vw;
+  background-repeat: repeat;
+  background-position: center;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.footer-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit; /* Maintain the text and icon color consistent */
+}
+
+.github-logo {
+  width: 60px;
+  height: 30px;
+}
+
+.open-icon {
+  width: 15px;
+}
+
+.open-link-icon-wrapper {
+  margin-left: -8px; /* Add space between the GitHub logo and the open link icon */
+}
+
+.open-link-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer; /* Pointer behavior for the open link icon */
+  text-decoration: none;
+  color: #26d6b3;
+}
+
+.open-link-icon svg {
+  fill: currentColor; /* Matches the text/icon color */
+  transition: transform 0.2s ease;
+}
+
+.open-link-icon:hover svg {
+  transform: scale(1.2); /* Slight animation on hover */
+}
+
+.footer-toast {
+  position: absolute;
+  right: 0;
+  top: -15px;
+}
+
+.toast-text {
+  font-size: medium;
+}
+
+/* Mobile Screen */
+@media screen and (max-device-width: 425px) {
+  .github-logo {
+    width: 50px;
+    height: 25px;
+  }
+
+  .open-link-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Tablet Screen */
+@media screen and (max-device-width: 768px) and (min-width: 426px) {
+  .github-logo {
+    width: 55px;
+    height: 28px;
+  }
+}

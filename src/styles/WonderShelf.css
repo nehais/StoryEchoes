@@ -1,0 +1,271 @@
+/*Load & Error Message*/
+.message-area {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.function-area {
+  height: 15%;
+  width: 100vw;
+  background-color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.search-bar {
+  background-image: url("../assets/search.png");
+  background-repeat: no-repeat;
+  background-size: 25px;
+  background-position: 1px;
+  width: 50%;
+  padding: 10px;
+  border-radius: 15px;
+  border: 1px solid grey;
+
+  font-family: "Comic Neue", cursive;
+  font-size: 1em;
+  text-indent: 20px;
+}
+
+.func-button {
+  width: 100px;
+  height: 35px;
+  border-radius: 10px;
+  background-color: #1d1a51;
+  color: #dce6e4;
+  font-size: 0.8em;
+}
+
+.func-button:hover {
+  color: #535bf2;
+}
+
+.grid-view-button {
+  width: 50px;
+  height: 35px;
+  border-radius: 10px;
+
+  background-color: #1d1a51 !important;
+  color: #dce6e4;
+  font-size: 0.8em;
+
+  background-size: 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
+
+.view-button {
+  width: 50px;
+  height: 35px;
+  border-radius: 10px;
+
+  background-color: #1d1a51;
+  color: #dce6e4;
+  font-size: 0.8em;
+
+  background-size: 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
+
+/* Main container for WonderShelf */
+.wonder-shelf {
+  height: 100%;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.add-button-card {
+  width: 200px;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-button-card:hover,
+.add-button:hover {
+  transform: scale(1.1);
+}
+
+/* Container for the list of stories */
+.story-list {
+  width: 100vw;
+  margin-top: 20px;
+  padding: 10px 10px 0 20px;
+
+  display: flex; /* Use flexbox to align stories horizontally */
+  flex-wrap: wrap; /* Allow wrapping if there are too many stories */
+  gap: 30px;
+  justify-content: flex-start;
+  align-items: center;
+
+  overflow-y: auto;
+  max-height: 70vh;
+}
+
+/* Scrollbar Styling */
+.story-list::-webkit-scrollbar {
+  width: 10px;
+}
+
+.story-list::-webkit-scrollbar-thumb {
+  background-color: #26d6b3;
+  border-radius: 10px;
+}
+
+.add-button {
+  width: 80px;
+  height: 80px;
+  padding: 0;
+
+  border: none;
+  background-color: transparent !important;
+}
+
+/* Styling specifically for the Add (+) Icon */
+.add-button img {
+  width: 80px;
+  height: 80px;
+  border: 2px dashed #007bff;
+  border-radius: 10px;
+}
+
+/* Hover effect for the Add (+) Icon */
+.add-icon:hover {
+  transform: scale(1.05);
+}
+
+/* Styling for each story item */
+.story-item {
+  max-width: 250px;
+  text-align: center;
+}
+
+.story-card {
+  width: 200px;
+  height: 250px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+}
+
+/* Hover effect for story cards */
+.story-card:hover {
+  transform: scale(1.05);
+}
+
+/* Styling for story card images */
+.story-card img {
+  width: 200px;
+  height: 175px;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
+}
+
+.story-card h2 {
+  margin: 5px;
+  text-align: justify;
+  font-size: 1em;
+  color: blueviolet;
+}
+
+.story-card h3 {
+  margin: 5px;
+  text-align: left;
+  font-size: 0.8em;
+  font-weight: bold;
+  color: rgb(17, 108, 133);
+}
+
+.story-card-action {
+  margin-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.story-list-view {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+
+  overflow-y: auto;
+  max-height: 70vh;
+}
+
+/* Scrollbar Styling */
+.story-list-view::-webkit-scrollbar {
+  width: 10px;
+}
+
+.story-list-view::-webkit-scrollbar-thumb {
+  background-color: #26d6b3;
+  border-radius: 10px;
+}
+
+.fav-title {
+  margin: 10px 0 5px 0;
+  color: white;
+  font-family: "Comic Neue", cursive;
+}
+
+.empty-bookshelf{
+  width: 100%;
+}
+
+.empty-fav-msg {
+  margin-top: 20px;
+  font-family: "Bubblegum Sans", cursive;
+  font-size: 2em;
+}
+
+.empty-book-shelf-img {
+  width: 250px;
+}
+
+/*Mobile Screen*/
+@media screen and (max-device-width: 425px) {
+  .wonder-shelf {
+    overflow-y: auto;
+  }
+
+  .search-bar {
+    font-size: 0.8em;
+  }
+
+  .func-button {
+    font-size: 0.6em;
+  }
+
+  .story-list {
+    flex-direction: column;
+    max-height: max-content;
+  }
+
+  .add-button-card {
+    width: 10px;
+    height: 50px;
+  }
+
+  .add-button,
+  .add-button img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .empty-fav-msg {
+    font-size: 1.5em;
+  }
+}

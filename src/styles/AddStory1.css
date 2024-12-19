@@ -1,0 +1,389 @@
+/* Import Bubblegum Sans and Comic Neue Font */
+@import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap');
+
+
+/* Full Page Background */
+body {
+  margin: 0;
+  padding: 0;
+  background: white;
+  font-family: "Comic Neue", cursive;
+  color: #cb33a5;
+}
+
+/* General Error Message Styling */
+.error {
+  color: #cb33a5;
+  font-weight: bold;
+  font-size: 1.0rem;
+}
+
+/* Bold All Text */
+body,
+.form-group label,
+.submit-button::after,
+.page-input-group h3 {
+ font-weight: bold;
+}
+
+/* Form Container */
+.add-story-container {
+  width: 80%;
+  max-height: 80vh;
+  margin: 70px auto;
+  padding: 20px;
+  background: url("../assets/back-stars.png") center/cover no-repeat;
+  border-radius: 20px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Prevent horizontal scroll bar */
+  position: relative;
+  margin-bottom: 35px;
+}
+
+/* Scrollbar Styling */
+.add-story-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.add-story-container::-webkit-scrollbar-thumb {
+  background-color: #26d6b3;
+  border-radius: 10px;
+}
+
+/* Title and Author Fields Side-by-Side */
+.row {
+  display: flex;
+  justify-content: space-between; /* Ensures fields align correctly */
+  align-items: center; /* Align fields vertically */
+  margin: 0 auto;
+  width: 60%; /* Maintain proper alignment within the parent container */
+  gap: 40px; /* Space between the fields, adjust as needed */
+}
+
+.row .form-group {
+  width: 48%; /* Ensure both fields are equal in size */
+  text-align: left;
+  color: #26d6b3;
+  font-size: 1.3rem;
+  margin: 0; /* Remove unnecessary margins */
+}
+
+/* Front Cover Field Alignment */
+.front-cover-group {
+  display: flex;
+  flex-direction: column; /* Stack label, preview, and input vertically */
+  justify-content: center; /* Center content */
+  align-items: center; /* Center horizontally */
+  width: 100%; /* Make it responsive to the parent container */
+  max-width: 600px; /* Limit the maximum width for larger screens */
+  /* margin: 0 auto 15px; Center align and add spacing below */
+  text-align: auto; /* Align text to the left */
+  margin-left: 90px;
+}
+
+/* Adjust Label Styling */
+.front-cover-group label {
+  font-size: 1.3rem;
+  margin-bottom: 10px; /* Add spacing below label */
+  color: rgb(104, 223, 201);
+  width: 100%;
+  text-align: left; /* Center label text */
+  margin-left: 190px;
+  margin-top: 25px;
+}
+
+/* Front Cover Preview Image */
+.front-cover-preview {
+  width: 100%; /* Take the full width of the container */
+  max-width: 300px; /* Limit size on larger screens */
+  aspect-ratio: 3/4; /* Maintain an image aspect ratio */
+  object-fit: cover; /* Ensure the image scales proportionally */
+  border: 2px dashed rgb(104, 223, 201); /* Dashed border for preview */
+  border-radius: 10px; /* Rounded corners */
+  margin-bottom: 10px; /* Spacing between preview and input field */
+}
+
+/* Front Cover Input Field */
+.front-cover-group input {
+  width: 100%; /* Responsive width */
+  max-width: 400px; /* Limit width for larger screens */
+  padding: 10px; /* Add padding for better usability */
+  font-size: 1.2rem; /* Ensure readability */
+  border: 2px solid rgb(104, 223, 201);
+  border-radius: 8px;
+  background-color: white;
+  color: black;
+  margin-bottom: 10px; /* Space below input field */
+}
+
+/* Upload Icon */
+.front-cover-group .add-image-icon {
+  position: relative; /* Adjust for responsive placement */
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  margin-top: -130px; /* Add spacing above the icon */
+  margin-left: 370px;
+  top:-5px;
+  background: url("../assets/pluss.png") center/contain no-repeat;
+  border: none;
+}
+
+.front-cover-group .add-image-icon:hover {
+  transform: scale(1.2); /* Slight zoom effect on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) { /* For iPads and smaller screens */
+  .front-cover-group {
+    max-width: 90%; /* Adjust width for smaller screens */
+  }
+  
+  .front-cover-preview {
+    max-width: 250px; /* Reduce preview size */
+  }
+
+  .front-cover-group input {
+    font-size: 1rem; /* Slightly smaller font */
+  }
+}
+
+@media (max-width: 768px) { /* For mobile devices */
+  .front-cover-group {
+    width: 100%; /* Take full width */
+    padding: 0 15px; /* Add padding for better spacing */
+  }
+
+  .front-cover-preview {
+    max-width: 200px; /* Further reduce preview size */
+  }
+
+  .front-cover-group input {
+    font-size: 0.9rem; /* Smaller font for smaller screens */
+    padding: 8px; /* Adjust padding */
+  }
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group input,
+.form-group textarea {
+  background-color: white;
+  color: black;
+  width: 100%;
+  padding: 10px;
+  font-size: 1.2rem;
+  border: 2px solid rgb(104, 223, 201);
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.3s ease;
+  font-family: "Comic Neue", cursive;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: rgb(104, 223, 201);
+  /* box-shadow: 0 0 5px rgba(0, 61, 153, 0.7); */
+}
+
+/* Pages Section */
+.pages-container {
+  position: relative;
+  padding: 15px;
+  border: 2px solid #28c4ac;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  width: 75%;
+  margin: 15px auto;
+  margin-bottom: 100px;
+}
+
+.page-input-group {
+  position: relative; /* Enable relative positioning for icon placement */
+  margin-bottom: 15px;
+}
+
+.page-input-group h3 {
+  font-family: 'Bubblegum Sans', cursive;
+  color: #cb33a5;
+}
+
+.page-input-group label {
+  font-size: 0.1 rem;
+  font-family: 'Bubblegum Sans', cursive;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.page-input-group input,
+.page-input-group textarea {
+  width: 90%;
+  padding: 10px;
+  border: 2px solid #28c4ac;
+  border-radius: 8px;
+  font-family: 'Bubblegum Sans', cursive;
+  background-color: white;
+  color: black;
+}
+
+/* Page Image Icon */
+.page-input-group .add-image-icon {
+  position: absolute;
+  top: 190px; /* Positioned above the input field */
+  right:50px; /* Slightly inset to align properly */
+  cursor: pointer;
+  width: 24px; /* Adjusted size for better proportions */
+  height: 24px;
+  background: url("../assets/pluss.png") center/contain no-repeat;
+  border: none;
+  transition: transform 0.3s ease;
+}
+
+.page-input-group .add-image-icon:hover {
+  transform: scale(1.2); /* Slightly larger on hover */
+}
+
+.page-buttons {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: flex;
+  gap: 5px;
+}
+
+.add-page-button,
+.delete-page-button {
+  width: 30px;
+  height: 30px;
+  background-size: contain;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.add-page-button {
+  background: url("../assets/add-button.gif") center/contain no-repeat;
+
+}
+
+.delete-page-button {
+  background: url("../assets/delete-button.gif") center/contain no-repeat;
+}
+
+.add-page-button:hover,
+.delete-page-button:hover {
+  transform: scale(1.1);
+}
+
+/* Limit Reached Message */
+.limit-message {
+  color: #003d99;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.bee-submit-button {
+  background-color: #ffc107; /* Button background color */
+  color: #000; /* Text color */
+  font-size: 1rem; /* Smaller text size */
+  font-weight: bold;
+  border: 2px solid #ff9800; /* Border color */
+  border-radius: 10px; /* Rounded corners */
+  padding: 5px 15px; /* Smaller padding for a compact button */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px; /* Space between bees */
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow */
+  margin: 0 auto; /* Center the button */
+  position: relative;
+}
+
+.bee-submit-button:hover {
+  background-color: #ff9800; /* Hover background color */
+  color: #fff; /* Hover text color */
+  transform: scale(1.1); /* Slightly enlarge the button */
+}
+
+.bee {
+  font-size: 1.5rem; /* Size of the bee icon */
+}
+
+.submit-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column; /* Align items vertically */
+  margin-top: 20px; /* Add spacing from other elements */
+  text-align: center;
+}
+
+.submit-message {
+  font-size: 1.2rem; /* Message font size */
+  color: #cb33a5; /* Message color */
+  margin-top: 10px; /* Space above the message */
+  font-family: 'Comic Neue', cursive;
+}
+
+/* Honey Bee Section */
+.bee-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  background-color: #fff5c0; /* Soft yellow for a bee-themed section */
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #f0e68c;
+}
+
+.bee-message {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  color: #333;
+}
+
+.bee-icon {
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+}
+
+.transcription-status {
+  font-size: 0.9rem;
+  color: #555;
+  margin-left: auto;
+  margin-right: 16px;
+}
+
+/* Transcription Button */
+.transcription-button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.transcription-button:hover {
+  background-color: #0056b3;
+}
+
+
+
