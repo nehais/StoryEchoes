@@ -1031,7 +1031,123 @@ const AddStory = () => {
             setErrors={setErrors}
             mode={"add"}
           ></BookCoverFields>
+          {/* Title and Author 
+            <div className="row">
+              <div className={`form-group ${errors.title ? "error-highlight" : "" }`}>
+                <label>Title</label>
+                <input type="text" value={title} placeholder="Enter your story's title" onChange={(e)=> {
+                setTitle(e.target.value);
+                if (e.target.value.trim()) {
+                setErrors((prevErrors) => {
+                const updatedErrors = { ...prevErrors };
+                delete updatedErrors.title;
+                return updatedErrors;
+                });
+                }
+                }}
+                style={{ fontFamily: "Comic Neuve, cursive" }}
+                />
+                {errors.title && <span className="error">{errors.title}</span>}
+              </div>
 
+              <div className={`form-group ${errors.author ? "error-highlight" : "" }`}>
+                <label>Author</label>
+                <input type="text" value={author} placeholder="Enter author's name" onChange={(e)=> {
+                setAuthor(e.target.value);
+                if (e.target.value.trim()) {
+                setErrors((prevErrors) => {
+                const updatedErrors = { ...prevErrors };
+                delete updatedErrors.author;
+                return updatedErrors;
+                });
+                }
+                }}
+                style={{ fontFamily: "Comic Neuve, cursive" }}
+                />
+                {errors.author && <span className="error">{errors.author}</span>}
+              </div>
+            </div>
+
+            <div className="row" style={{
+              justifyContent: "space-between",
+            }}>
+              <div style={{
+                width: "47%",
+                display: "flex",
+                justifyContent: "space-between",
+                padding: "0px",
+                alignItems: "center",
+              }}>
+                <div className={`form-group front-cover-group ${ errors.frontCover ? "error-highlight" : "" }`} style={{
+                  width: "100%",
+                }}>
+                  <label>Front Cover</label>
+
+                  <input type="file" ref={frontCoverFileRef} accept="image/*" onChange={(e)=> handleFileUpload(e, null,
+                  "image")}
+                  className="image-field"
+                  style={{
+                    width: "100%",
+                    marginBottom: "0px",
+                    fontFamily: "Comic Neuve, cursive",
+                  }}
+                  />
+                </div>
+
+                <div className="doodle-button">
+                  <OverlayTrigger placement="top" overlay={ <Tooltip id="doodle-tooltip">
+                    Draw a Doodle for Cover Page
+                    </Tooltip>
+                    }
+                    >
+                    <button onClick={(e)=> {
+                      e.preventDefault(); // Prevent default action
+                      setIsDoodleOpen(true); // Open the Doodle modal
+                      }}
+                      style={{
+                      height: "37px",
+                      fontFamily: "Comic Neuve, cursive",
+                      fontSize: "1em", // Increased font size
+                      marginTop: "10px",
+                      borderRadius: "10px",
+                      backgroundColor: "darkblue",
+                      color: "Magenta",
+                      border: "2px solid #28c4ac",
+                      padding: "5px 5px",
+                    }}
+                      className="add-edit-story-buttons"
+                      >
+                      Doodle 🎨
+                    </button>
+                  </OverlayTrigger>
+                </div>
+
+                
+                <Doodle isOpen={isDoodleOpen} onClose={()=> setIsDoodleOpen(false)} // Close the modal
+                  onSave={handleDoodleGenerated} // Handle Doodle upload and update state
+                  />
+              </div>
+              {errors.frontCover && (
+              <span className="error">{errors.frontCover}</span>
+              )}
+
+              
+              <div className="front-cover-img" style={{
+                paddingLeft: "20px",
+              }}>
+                {frontCover && (
+                <>
+                  <img src={frontCover} alt="Front Cover" style={{
+                      width: "80px",
+                      height: "80px",
+                      objectFit: "cover",
+                      borderRadius: "4px",
+                    }} />
+                </>
+                )}
+              </div>
+            </div>
+*/}
           <div className="row">
             <div className="form-group">
               {/* Story Content Label */}
