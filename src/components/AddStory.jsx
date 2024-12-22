@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import "../styles/AddStory.css";
 import FallbackImage from "../assets/fallback.jpg";
 import axios from "axios";
-import SpeechToTextModal from "./Speechtotext"; //Import the Speech to text component
 import { API_URL } from "../config/apiConfig.js";
 import { useStories } from "../contexts/stories.context.jsx";
 import PollinationImage from "./PollinationImage.jsx"; // Import the PollinationImage component
@@ -11,8 +10,8 @@ import PollinationImage from "./PollinationImage.jsx"; // Import the Pollination
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 
-import micIcon from "../assets/mic.png";
 import BookCoverFields from "./BookCoverFields.jsx";
+import StoryTextImageFields from "./StoryTextImageFields.jsx";
 
 const AddStory = () => {
   const INITIAL_PAGES = [];
@@ -713,54 +712,6 @@ const AddStory = () => {
     }
   };
 
-  const handleMediaUrlInput = (e, index) => {
-    const url = e.target.value.trim(); // Get the value from the event object
-    if (!url) {
-      // If the URL is empty, clear the media URL and error
-      setPages((prevPages) =>
-        prevPages.map((page, i) =>
-          i === index ? { ...page, mediaUrl: "", mediaUrlError: null } : page
-        )
-      );
-      return;
-    }
-
-    // Supported audio and video file extensions
-    const validAudioExtensions = /\.(mp3|mp4|wav|ogg)$/i;
-
-    if (!validAudioExtensions.test(url)) {
-      // If the URL format is invalid, clear media URL and set an error message
-      setPages((prevPages) =>
-        prevPages.map(
-          (page, i) =>
-            i === index
-              ? {
-                  ...page,
-                  mediaUrl: "", // Clear the media URL
-                  mediaUrlError:
-                    "Error! Supported formats: .mp3, .mp4, .wav, .ogg.",
-                }
-              : page // Keep other pages unchanged
-        )
-      );
-      return; // Exit the function to prevent further processing
-    }
-
-    // When a valid URL is entered, clear the audio file input and update the Media URL
-    setPages((prevPages) =>
-      prevPages.map((page, i) =>
-        i === index
-          ? { ...page, mediaUrl: url, mediaUrlError: null, audio: null } // Clear audio file input
-          : page
-      )
-    );
-
-    // Clear the audio file input using its reference
-    if (audioFileRefs.current[index]) {
-      audioFileRefs.current[index].value = ""; // Clear the file input's value
-    }
-  };
-
   //Scroll for general page message.
   useEffect(() => {
     if (generalErrorMessage) {
@@ -1018,103 +969,20 @@ const AddStory = () => {
                   ></div>
                 ))}
 
-                {/* Text Area */}
-                <div style={{ display: "flex" }}>
-                  <div
-                    className="story-text-field"
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "flex-start",
-                    }}
-                  >
-                    <textarea
-                      value={page.text}
-                      placeholder="Write your story here..."
-                      onChange={(e) =>
-                        handlePageTextChange(e.target.value, index)
-                      }
-                      style={{
-                        fontFamily: "Bubblegum Sans, cursive",
-                        height: "80px",
-                        fontSize: "1em",
-                      }}
-                    />
-
-                    {/*Speak Story Button*/}
-                    <OverlayTrigger
-                      placement="top"
-                      overlay={
-                        <Tooltip id="speak-tooltip">
-                          Narrate your story to text here.
-                        </Tooltip>
-                      }
-                    >
-                      <button
-                        className="speak-button"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          openSpeechToTextModal(index);
-                        }}
-                      >
-                        <img src={micIcon} alt="Mic Icon" />
-                      </button>
-                    </OverlayTrigger>
-                  </div>
-
-                  {/* Speech-to-Text Modal */}
-                  {isModalVisible && (
-                    <SpeechToTextModal
-                      isVisible={isModalVisible}
-                      onClose={closeSpeechToTextModal}
-                      onSubmit={handleModalSubmit}
-                      existingText={
-                        currentPageIndex !== null
-                          ? pages[currentPageIndex].text
-                          : ""
-                      }
-                    />
-                  )}
-
-                  <div>
-                    {page.image && (
-                      <div>
-                        <img
-                          src={page.image}
-                          alt={`Page ${page.page}`}
-                          style={{
-                            width: "80px", // Adjust the width of the input field
-                            height: "80px",
-                            border: "1px solid #ccc",
-                            borderRadius: "4px",
-                          }}
-                        />
-                      </div>
-                    )}
-
-                    {/* Dynamically Render the Temporary Component */}
-                    {!page.image && temporaryComponent}
-                    {page.imageError && (
-                      <span
-                        className="error"
-                        style={{
-                          fontFamily: "Comic Neuve, cursive",
-                          fontWeight: "bold",
-                          fontSize: "0.75em",
-                        }}
-                      >
-                        {page.imageError}
-                      </span>
-                    )}
-
-                    {errors.pages &&
-                      index + 1 ===
-                        parseInt(errors.pages.match(/\d+/)?.[0]) && (
-                        <span className="error">{errors.pages}</span>
-                      )}
-                  </div>
-                </div>
+                {/* Text Area & Image */}
+                <StoryTextImageFields
+                  page={page}
+                  pages={pages}
+                  index={index}
+                  handlePageTextChange={handlePageTextChange}
+                  temporaryComponent={temporaryComponent}
+                  isModalVisible={isModalVisible}
+                  openSpeechToTextModal={openSpeechToTextModal}
+                  closeSpeechToTextModal={closeSpeechToTextModal}
+                  handleModalSubmit={handleModalSubmit}
+                  currentPageIndex={currentPageIndex}
+                  errors={errors}
+                ></StoryTextImageFields>
 
                 {/* Image Button Area */}
                 <div
