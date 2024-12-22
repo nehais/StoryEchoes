@@ -976,6 +976,7 @@ const AddStory = () => {
                   index={index}
                   handlePageTextChange={handlePageTextChange}
                   temporaryComponent={temporaryComponent}
+                  mode={"add"}
                   isModalVisible={isModalVisible}
                   openSpeechToTextModal={openSpeechToTextModal}
                   closeSpeechToTextModal={closeSpeechToTextModal}

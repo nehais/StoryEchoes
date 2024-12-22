@@ -10,6 +10,7 @@ import { useStories } from "../contexts/stories.context.jsx";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import BookCoverFields from "./BookCoverFields.jsx";
+import StoryTextImageFields from "./StoryTextImageFields.jsx";
 
 const EditStory = () => {
   const { id } = useParams();
@@ -958,67 +959,15 @@ ${pageNumbers}.`;
                   </h3>
                 )}
 
-                {/* Text Area */}
-                <div style={{ display: "flex" }}>
-                  <div
-                    className="story-text-field"
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "flex-start",
-                    }}
-                  >
-                    <textarea
-                      value={page.text}
-                      placeholder="Write your story here..."
-                      onChange={(e) =>
-                        handlePageTextChange(e.target.value, index)
-                      }
-                      style={{
-                        fontFamily: "Bubblegum Sans, cursive",
-                        height: "80px",
-                      }}
-                    />
-                  </div>
-
-                  {/* Display image next to the Text*/}
-                  <div>
-                    {page.image && (
-                      <img
-                        src={page.image}
-                        alt={`Page ${page.page}`}
-                        style={{
-                          width: "80px", // Adjust the width of the input field
-                          height: "80px",
-                          border: "1px solid #ccc",
-                          borderRadius: "10px",
-                        }}
-                      />
-                    )}
-
-                    {/* Dynamically Render the Temporary Component */}
-                    {!page.image && temporaryComponent}
-
-                    {page.imageError && (
-                      <span
-                        className="error"
-                        style={{
-                          fontFamily: "Comic Neuve, cursive",
-                          fontWeight: "bold",
-                          fontSize: "1rem",
-                        }}
-                      >
-                        {page.imageError}
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                {errors.pages &&
-                  index + 1 === parseInt(errors.pages.match(/\d+/)?.[0]) && (
-                    <span className="error">{errors.pages}</span>
-                  )}
+                {/* Text Area & Image */}
+                <StoryTextImageFields
+                  page={page}
+                  pages={pages}
+                  index={index}
+                  handlePageTextChange={handlePageTextChange}
+                  temporaryComponent={temporaryComponent}
+                  errors={errors}
+                ></StoryTextImageFields>
 
                 {/* Image Button Area */}
                 <div

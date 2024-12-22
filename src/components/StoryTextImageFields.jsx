@@ -11,6 +11,7 @@ const StoryTextImageFields = ({
   index,
   handlePageTextChange,
   temporaryComponent,
+  mode,
   isModalVisible,
   openSpeechToTextModal,
   closeSpeechToTextModal,
@@ -53,6 +54,7 @@ const StoryTextImageFields = ({
           >
             <button
               className="speak-button"
+              style={{ display: mode === "add" ? "flex" : "none" }}
               onClick={(e) => {
                 e.preventDefault();
                 openSpeechToTextModal(index);
