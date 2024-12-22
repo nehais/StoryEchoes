@@ -4,7 +4,6 @@ import "../styles/EditStory.css";
 import FallbackImage from "../assets/fallback.jpg";
 import PollinationImage from "./PollinationImage"; // Import the PollinationImage component
 import axios from "axios";
-import Doodle from "./Doodle";
 import { API_URL } from "../config/apiConfig.js";
 import { useStories } from "../contexts/stories.context.jsx";
 
@@ -24,7 +23,6 @@ const EditStory = () => {
   const pagesContainerRef = useRef(null);
   const { setRefresh } = useStories(); //Fetched stories in Context API
   const [temporaryComponent, setTemporaryComponent] = useState(null);
-  const [isDoodleOpen, setIsDoodleOpen] = useState(false); // Controls the Doodle modal
   const [generalErrorMessage, setGeneralErrorMessage] = useState(); // State for error message
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
@@ -66,47 +64,6 @@ const EditStory = () => {
         behavior: "smooth", // Smooth scrolling
         block: "center", // Center the field vertically
       });
-    }
-  };
-
-  const uploadDoodleToCloudinary = async (blob) => {
-    const formData = new FormData();
-    formData.append("file", blob); // Append the Blob
-    formData.append("upload_preset", "StoryEchoes"); // Your Cloudinary upload preset
-
-    try {
-      const response = await axios.post(
-        "https://api.cloudinary.com/v1_1/dhxwg8gcz/upload", // Replace with your Cloudinary URL
-        formData
-      );
-      console.log("Cloudinary Response:", response.data);
-      return response.data.secure_url; // Return the uploaded image URL
-    } catch (error) {
-      console.error(
-        "Cloudinary upload failed:",
-        error.response || error.message
-      );
-      throw new Error("Failed to upload Doodle.");
-    }
-  };
-
-  // Function to handle Doodle Save
-  const handleDoodleGenerated = async (blob) => {
-    try {
-      console.log("Uploading Doodle...");
-      const uploadedUrl = await uploadDoodleToCloudinary(blob); // Upload to Cloudinary
-      setFrontCover(uploadedUrl); // Update front cover
-
-      console.log("Doodle uploaded successfully:", uploadedUrl);
-
-      // Clear the file input field for the front cover
-      if (frontCoverFileRef.current) {
-        frontCoverFileRef.current.value = ""; // Reset the file input field
-        console.log("Front cover file input cleared.");
-      }
-    } catch (error) {
-      console.error("Doodle upload failed:", error);
-      alert("Failed to upload the Doodle. Please try again.");
     }
   };
 
@@ -968,7 +925,7 @@ ${pageNumbers}.`;
             setAuthor={setAuthor}
             frontCoverFileRef={frontCoverFileRef}
             handleFileUpload={handleFileUpload}
-            handleDoodleGenerated={handleDoodleGenerated}
+            setFrontCover={setFrontCover}
             frontCover={frontCover}
             validate={validate}
             errors={errors}
@@ -1120,63 +1077,6 @@ ${pageNumbers}.`;
                     </div>
                   )}
                 </div>
-
-                {/* UN-USED MEDIA URL  */}
-                {/*
-                <div className="page-media-buttons">
-                  <div
-                    style={{
-                      width: "40%",
-                    }}
-                  >
-                    
-                    <input
-                      type="text"
-                      placeholder="Paste media URL"
-                      value={page.mediaUrl || ""}
-                      onChange={(e) => handleMediaUrlInput(e, index)}
-                      onBlur={(e) => handleMediaUrlInput(e, index)}
-                      style={{
-                        fontFamily: "Bubblegum Sans, cursive",
-                        width: "100%",
-                        backgroundColor: page.mediaUrl ? "gray" : "white", // Greyed out if media URL is provided
-                        opacity: page.mediaUrl ? 0.5 : 1, // Adjust opacity
-                      }}
-                      disabled={!!page.audio} // Disable if audio is provided
-                    />
-                    {page.mediaUrlError && (
-                      <span
-                        className="error"
-                        style={{
-                          fontFamily: "Comic Neuve, cursive",
-                          fontSize: "0.75em",
-                        }}
-                      >
-                        {page.mediaUrlError}
-                      </span>
-                    )}
-                  </div>
-
-                  <div
-                    style={{
-                      alignSelf: "flex-start",
-                    }}
-                  >
-                    {page.mediaUrl && !page.mediaUrlError && (
-                      <button
-                        type="button"
-                        onClick={() => toggleMediaPlay(index)}
-                        style={{
-                          backgroundColor: "transparent",
-                          padding: "5px 0 0 10px",
-                          border: "none",
-                        }}
-                      >
-                        {page.isPlaying ? "⏸️" : "▶️"}
-                      </button>
-                    )}
-                  </div>
-                </div>*/}
 
                 {/* Media Area */}
                 <div className="audio-input-container">

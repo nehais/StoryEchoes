@@ -3,6 +3,7 @@ import { useState } from "react";
 import Doodle from "./Doodle";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
+import { uploadToCloudinary } from "../utils/cloudinaryUpload";
 
 const BookCoverFields = ({
   title,
@@ -11,7 +12,7 @@ const BookCoverFields = ({
   setAuthor,
   frontCoverFileRef,
   handleFileUpload,
-  handleDoodleGenerated,
+  setFrontCover,
   frontCover,
   validate,
   errors,
@@ -19,6 +20,26 @@ const BookCoverFields = ({
   mode,
 }) => {
   const [isDoodleOpen, setIsDoodleOpen] = useState(false); // Controls the Doodle modal
+
+  // Function to handle Doodle Save
+  const handleDoodleGenerated = async (blob) => {
+    try {
+      console.log("Uploading Doodle...");
+      const uploadedUrl = await uploadToCloudinary(blob, "Doodle"); // Upload to Cloudinary
+      setFrontCover(uploadedUrl); // Update front cover
+
+      console.log("Doodle uploaded successfully:", uploadedUrl);
+
+      // Clear the file input field for the front cover
+      if (frontCoverFileRef.current) {
+        frontCoverFileRef.current.value = ""; // Reset the file input field
+        console.log("Front cover file input cleared.");
+      }
+    } catch (error) {
+      console.error("Doodle upload failed:", error);
+      alert("Failed to upload the Doodle. Please try again.");
+    }
+  };
 
   function checkValidate() {
     if (mode === "edit") {

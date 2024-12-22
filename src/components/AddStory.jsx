@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import "../styles/AddStory.css";
 import FallbackImage from "../assets/fallback.jpg";
 import axios from "axios";
-import Doodle from "./Doodle";
 import SpeechToTextModal from "./Speechtotext"; //Import the Speech to text component
 import { API_URL } from "../config/apiConfig.js";
 import { useStories } from "../contexts/stories.context.jsx";
@@ -27,7 +26,6 @@ const AddStory = () => {
   const INITIAL_GENERAL_ERROR_MESSAGE = "";
   const { setRefresh } = useStories(); //Fetched stories in Context API
   const [isStoryAdded, setIsStoryAdded] = useState(false);
-  const [isDoodleOpen, setIsDoodleOpen] = useState(false); // Controls the Doodle modal
   const [currentPageIndex, setCurrentPageIndex] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false); // Control modal visibility
   const [pageToDelete, setPageToDelete] = useState(null);
@@ -103,27 +101,6 @@ const AddStory = () => {
     };
   };
 
-  const uploadDoodleToCloudinary = async (blob) => {
-    const formData = new FormData();
-    formData.append("file", blob); // Append the Blob
-    formData.append("upload_preset", "StoryEchoes"); // Your Cloudinary upload preset
-
-    try {
-      const response = await axios.post(
-        "https://api.cloudinary.com/v1_1/dhxwg8gcz/upload", // Replace with your Cloudinary URL
-        formData
-      );
-      console.log("Cloudinary Response:", response.data);
-      return response.data.secure_url; // Return the uploaded image URL
-    } catch (error) {
-      console.error(
-        "Cloudinary upload failed:",
-        error.response || error.message
-      );
-      throw new Error("Failed to upload Doodle.");
-    }
-  };
-
   const scrollToPage = (pageIndex) => {
     const pageElement = document.querySelector(
       `[data-page-index="${pageIndex}"]`
@@ -143,26 +120,6 @@ const AddStory = () => {
       });
     };
   }, []);
-
-  // Function to handle Doodle Save
-  const handleDoodleGenerated = async (blob) => {
-    try {
-      console.log("Uploading Doodle...");
-      const uploadedUrl = await uploadDoodleToCloudinary(blob); // Upload to Cloudinary
-      setFrontCover(uploadedUrl); // Update front cover
-
-      console.log("Doodle uploaded successfully:", uploadedUrl);
-
-      // Clear the file input field for the front cover
-      if (frontCoverFileRef.current) {
-        frontCoverFileRef.current.value = ""; // Reset the file input field
-        console.log("Front cover file input cleared.");
-      }
-    } catch (error) {
-      console.error("Doodle upload failed:", error);
-      alert("Failed to upload the Doodle. Please try again.");
-    }
-  };
 
   const movePage = (pageIndex, direction) => {
     setPages((prevPages) => {
@@ -1024,7 +981,7 @@ const AddStory = () => {
             setAuthor={setAuthor}
             frontCoverFileRef={frontCoverFileRef}
             handleFileUpload={handleFileUpload}
-            handleDoodleGenerated={handleDoodleGenerated}
+            setFrontCover={setFrontCover}
             frontCover={frontCover}
             validate={validate}
             errors={errors}
@@ -1119,6 +1076,7 @@ const AddStory = () => {
                       }
                     />
                   )}
+
                   <div>
                     {page.image && (
                       <div>
