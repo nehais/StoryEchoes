@@ -1,16 +1,20 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import "../styles/EditStory.css";
+import "../styles/AddEditStory.css";
 import FallbackImage from "../assets/fallback.jpg";
-import PollinationImage from "./PollinationImage"; // Import the PollinationImage component
+
 import axios from "axios";
 import { API_URL } from "../config/apiConfig.js";
 import { useStories } from "../contexts/stories.context.jsx";
 
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
+
+import PollinationImage from "./PollinationImage"; // Import the PollinationImage component
 import BookCoverFields from "./BookCoverFields.jsx";
 import StoryTextImageFields from "./StoryTextImageFields.jsx";
+import StoryImageButtons from "./StoryImageButtons.jsx";
+import StoryContentMediaFields from "./StoryContentMediaFields.jsx";
 
 const EditStory = () => {
   const { id } = useParams();
@@ -970,124 +974,23 @@ ${pageNumbers}.`;
                 ></StoryTextImageFields>
 
                 {/* Image Button Area */}
-                <div
-                  className="page-image-buttons"
-                  style={{ marginTop: "10px" }}
-                >
-                  {/* File Upload for Image */}
-                  <input
-                    type="file"
-                    accept="image/*"
-                    ref={(el) => (imageFileRefs.current[index] = el)} // Assign ref to the input
-                    onChange={(e) => handleFileUpload(e, index, "image")}
-                    className="image-field"
-                    style={{ width: "40%", maxHeight: "37px" }}
-                  />
-
-                  {page.text.trim() && (
-                    <div>
-                      {" "}
-                      {/* Parent wrapper */}
-                      {/* Generate Image Button */}
-                      <OverlayTrigger
-                        placement="top"
-                        overlay={
-                          <Tooltip id="generate-image-tooltip">
-                            Generate an AI Image on story content
-                          </Tooltip>
-                        }
-                      >
-                        <button
-                          type="button"
-                          onClick={() => handleImageGenerated(index, page.text)}
-                          disabled={page.isGenerating} // Disable the button while generating
-                          className="add-edit-story-buttons"
-                          style={{
-                            backgroundColor: page.isGenerating
-                              ? "white"
-                              : "darkblue",
-                            color: "Magenta",
-                            fontfamily: "Bubblegum San",
-                            fontWeight: "bold",
-                            cursor: page.isGenerating
-                              ? "not-allowed"
-                              : "pointer",
-                            border: "none",
-                            borderRadius: "5px",
-                            height: "35px",
-                            fontSize: "0.8em",
-                          }}
-                        >
-                          {page.isGenerating
-                            ? "Generating..."
-                            : "Generate Image"}
-                        </button>
-                      </OverlayTrigger>
-                    </div>
-                  )}
-                </div>
+                <StoryImageButtons
+                  page={page}
+                  index={index}
+                  imageFileRefs={imageFileRefs}
+                  handleFileUpload={handleFileUpload}
+                  handleImageGenerated={handleImageGenerated}
+                ></StoryImageButtons>
 
                 {/* Media Area */}
-                <div className="audio-input-container">
-                  {/* Audio File Input */}
-                  <input
-                    type="file"
-                    accept="audio/*"
-                    ref={(el) => (audioFileRefs.current[index] = el)} // Assign ref to the input
-                    onChange={(e) => handleFileUpload(e, index, "audio")}
-                    className="media-field"
-                    style={{
-                      width: "40%",
-                      maxHeight: "35px",
-                      marginRight: "535px",
-                      backgroundColor: page.audio ? "lightgreen" : "white", // Greyed out if media URL is provided
-                      opacity: page.mediaUrl ? 0.5 : 1, // Adjust opacity
-                    }}
-                  />
-                  {page.audioError && (
-                    <span
-                      className="error"
-                      style={{
-                        fontFamily: "Comic Neuve, cursive",
-                        fontSize: "0.75em",
-                      }}
-                    >
-                      {page.audioError}
-                    </span>
-                  )}
 
-                  <div
-                    style={{
-                      alignSelf: "flex-start",
-                    }}
-                  >
-                    {/* Play/Pause Button for Audio */}
-                    {page.audio && !page.audioError && (
-                      <OverlayTrigger
-                        placement="top"
-                        overlay={
-                          <Tooltip id="play-audio-tooltip">
-                            Play the audio
-                          </Tooltip>
-                        }
-                      >
-                        <button
-                          type="button"
-                          onClick={() => toggleAudio(index)}
-                          className="add-edit-story-buttons"
-                          style={{
-                            backgroundColor: "transparent",
-                            padding: "5px 0 0 10px",
-                            transform: "translate(-220%, -115%)",
-                            border: "none",
-                          }}
-                        >
-                          {page.isPlaying ? "⏸️" : "▶️"}
-                        </button>
-                      </OverlayTrigger>
-                    )}
-                  </div>
-                </div>
+                <StoryContentMediaFields>
+                  page={page}
+                  index={index}
+                  audioFileRefs={audioFileRefs}
+                  handleFileUpload={handleFileUpload}
+                </StoryContentMediaFields>
+
                 <div
                   className="page-buttons"
                   style={{ display: "flex", gap: "10px" }}

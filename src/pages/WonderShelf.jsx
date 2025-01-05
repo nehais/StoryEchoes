@@ -4,9 +4,9 @@ import { useSearchParams } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 
 import { useStories } from "../contexts/stories.context.jsx";
-import FunctionBar from "./FunctionBar";
-import StoryGridView from "./StoryGridView.jsx";
-import StoryListView from "./StoryListView.jsx";
+import FunctionBar from "../components/FunctionBar.jsx";
+import StoryGridView from "../components/StoryGridView.jsx";
+import StoryListView from "../components/StoryListView.jsx";
 
 const WonderShelf = () => {
   const { stories, loading, error } = useStories(); //Fetched stories in Context API
@@ -25,11 +25,13 @@ const WonderShelf = () => {
     if (searchStr) {
       tempBooks = stories.filter((oneStory) => {
         if (oneStory.title) {
-          return (oneStory.title.toUpperCase().search(searchStr.toUpperCase()) >= 0);
-        }else  {
-          return false
-        };
-      })
+          return (
+            oneStory.title.toUpperCase().search(searchStr.toUpperCase()) >= 0
+          );
+        } else {
+          return false;
+        }
+      });
     }
     tempBooks = sortByTitle(tempBooks);
     setFilteredBooks([...tempBooks]);
@@ -53,12 +55,12 @@ const WonderShelf = () => {
     let tempBooks = stories.filter((story) => story.title); // Exclude invalid entries
 
     if (searchStr) {
-      tempBooks = tempBooks.filter((oneStory) =>{
+      tempBooks = tempBooks.filter((oneStory) => {
         if (oneStory.title) {
-          return oneStory.title.toUpperCase().includes(searchStr.toUpperCase())
-        } else  {
-          return false
-        };      
+          return oneStory.title.toUpperCase().includes(searchStr.toUpperCase());
+        } else {
+          return false;
+        }
       });
     }
 

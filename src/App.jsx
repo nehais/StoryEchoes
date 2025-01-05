@@ -3,12 +3,12 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
-import Home from "./components/Home";
+import Home from "./pages/Home";
 import Footer from "./components/Footer";
 import AddStory from "./components/AddStory";
-import ReadStory from "./components/ReadStory";
-import WonderShelf from "./components/WonderShelf";
-import Whoweare from "./components/Whoweare";
+import ReadStory from "./pages/ReadStory";
+import WonderShelf from "./pages/WonderShelf";
+import Whoweare from "./pages/Whoweare";
 import EditStory from "./components/EditStory";
 import PageNotFound from "./components/PageNotFound";
 
@@ -21,8 +21,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/wonderShelf" element={<WonderShelf />} />
           <Route path="/addStory" element={<AddStory />} />
-          <Route path="/who-we-are" element={<Whoweare />} />
           <Route path="/editStory/:id" element={<EditStory />} />
+          <Route path="/who-we-are" element={<Whoweare />} />
           {/* Route for reading the story */}
           {/* Updated route to handle dynamic story IDs */}
           <Route path="/readStory/:id" element={<ReadStory />} />

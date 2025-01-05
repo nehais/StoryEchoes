@@ -108,23 +108,12 @@ const BookCoverFields = ({
         }}
       >
         {/* Select Front Cover pic*/}
-        <div
-          style={{
-            width: "47%",
-            display: "flex",
-            justifyContent: "space-between",
-            padding: "0px",
-            alignItems: "center",
-          }}
-        >
+        <div className="front-cover-create">
           <div
             id="frontCover"
             className={`form-group front-cover-group ${
               errors.frontCover ? "error-highlight" : ""
             }`}
-            style={{
-              width: "100%",
-            }}
           >
             <label>Front Cover</label>
             <input
@@ -133,9 +122,6 @@ const BookCoverFields = ({
               accept="image/*"
               onChange={(e) => handleFileUpload(e, null, "image")}
               className="image-field"
-              style={{
-                width: "100%",
-              }}
             />
           </div>
 
@@ -156,16 +142,6 @@ const BookCoverFields = ({
                   setIsDoodleOpen(true); // Open the Doodle modal
                 }}
                 className="add-edit-story-buttons"
-                style={{
-                  height: "37px",
-                  fontFamily: "Comic Neuve, cursive",
-                  fontSize: "1em", // Increased font size
-                  borderRadius: "10px",
-                  backgroundColor: "darkblue",
-                  color: "Magenta",
-                  border: "2px solid #28c4ac",
-                  padding: "5px 5px",
-                }}
               >
                 Doodle 🎨
               </button>
@@ -180,29 +156,17 @@ const BookCoverFields = ({
           </div>
         </div>
 
-        <div
-          className="front-cover-img"
-          style={{
-            paddingLeft: "20px",
-          }}
-        >
-          {frontCover && (
-            <img
-              src={frontCover}
-              alt="Front Cover"
-              style={{
-                width: "80px",
-                maxHeight: "80px",
-                objectFit: "cover",
-                borderRadius: "4px",
-              }}
-            />
-          )}
+        <div className="front-cover-img">
+          {frontCover && <img src={frontCover} alt="Front Cover" />}
         </div>
       </div>
 
       {/* Front Cover Pic errors*/}
-      {errors.frontCover && <span className="error">{errors.frontCover}</span>}
+      {errors.frontCover && (
+        <span className="error" style={{ paddingLeft: "10px" }}>
+          {errors.frontCover}
+        </span>
+      )}
     </>
   );
 };

@@ -12,8 +12,8 @@ import { useUsers } from "../contexts/user.context.jsx";
 
 import axios from "axios";
 import { API_URL } from "../config/apiConfig.js";
-import ActionBar from "./ActionBar.jsx";
-import MediaButton from "./MediaButton.jsx";
+import ActionBar from "../components/ActionBar.jsx";
+import MediaButton from "../components/MediaButton.jsx";
 
 const ReadStory = () => {
   const { id } = useParams(); // Get the story ID from the route

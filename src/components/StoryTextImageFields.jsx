@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import micIcon from "../assets/mic.png";
 import SpeechToTextModal from "./Speechtotext"; //Import the Speech to text component
 
@@ -23,24 +22,11 @@ const StoryTextImageFields = ({
     <>
       {/* Text Area */}
       <div style={{ display: "flex" }}>
-        <div
-          className="story-text-field"
-          style={{
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-start",
-          }}
-        >
+        <div className="story-text-field">
           <textarea
             value={page.text}
             placeholder="Write your story here..."
             onChange={(e) => handlePageTextChange(e.target.value, index)}
-            style={{
-              fontFamily: "Bubblegum Sans, cursive",
-              height: "80px",
-              fontSize: "1em",
-            }}
           />
 
           {/*Speak Story Button*/}
@@ -83,38 +69,22 @@ const StoryTextImageFields = ({
               <img
                 src={page.image}
                 alt={`Page ${page.page}`}
-                style={{
-                  width: "80px", // Adjust the width of the input field
-                  height: "80px",
-                  border: "1px solid #ccc",
-                  borderRadius: "4px",
-                }}
+                className="page-content-image"
               />
             </div>
           )}
-
-          {/* Dynamically Render the Temporary Component */}
-          {!page.image && temporaryComponent}
-          {page.imageError && (
-            <span
-              className="error"
-              style={{
-                fontFamily: "Comic Neuve, cursive",
-                fontWeight: "bold",
-                fontSize: "0.75em",
-              }}
-            >
-              {page.imageError}
-            </span>
-          )}
-
-          {errors &&
-            errors.pages &&
-            index + 1 === parseInt(errors.pages.match(/\d+/)?.[0]) && (
-              <span className="error">{errors.pages}</span>
-            )}
         </div>
       </div>
+
+      {/* Dynamically Render the Temporary Component */}
+      {!page.image && temporaryComponent}
+      {page.imageError && <span className="error">{page.imageError}</span>}
+
+      {errors &&
+        errors.pages &&
+        index + 1 === parseInt(errors.pages.match(/\d+/)?.[0]) && (
+          <span className="error">{errors.pages}</span>
+        )}
     </>
   );
 };
