@@ -17,9 +17,9 @@
   color: white; /* Text color set to white for better readability */
 }
 
-.about-site-title{
+.about-site-title {
   color: #26d6b3;
-  font-size: 2.5em;
+  font-size: 2em;
   font-weight: bold;
 }
 
@@ -31,10 +31,10 @@
 
 /* Ensure h3 is centered and visible */
 .about-container h3 {
-  font-size: 3em;
+  font-size: 2.5em;
   color: #26d6b3;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-  margin-top: 0;
+  margin: 0;
   padding: 40px 0 20px 0;
 }
 
@@ -44,7 +44,6 @@
   justify-content: center; /* Center profile items */
   list-style-type: none;
   padding: 0;
-  margin: 20px 0;
   gap: 40px; /* Add gap between profiles */
   flex-wrap: wrap; /* Allow wrapping on smaller screens */
 }
@@ -59,7 +58,7 @@
 
 /* Styling for the profile name */
 .about-list-items .name {
-  font-size: 2.5em;
+  font-size: 2em;
   color: #26d6b3; /* Color to match the heading */
   font-weight: 600;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
@@ -68,7 +67,7 @@
 
 /* Styling for profile image */
 .profile-image {
-  width: 80%; /* Ensure image is proportionate */
+  width: 40%; /* Ensure image is proportionate */
   max-width: 150px; /* Max width for consistency */
   height: auto;
   border: 2px solid rgb(126, 126, 214);
@@ -103,7 +102,7 @@
     justify-content: flex-start;
   }
 
-  .about-site-title{
+  .about-site-title {
     font-size: 1.2em;
   }
 
@@ -131,7 +130,7 @@
     font-size: 0.8em;
   }
 
-  .additional-info li{
+  .additional-info li {
     margin: 0;
   }
 
@@ -140,7 +139,7 @@
     gap: 0;
     flex-wrap: nowrap;
 
-    li{
+    li {
       margin: 0;
     }
   }
