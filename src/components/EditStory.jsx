@@ -52,7 +52,7 @@ const EditStory = () => {
   ]);
   const [errors, setErrors] = useState({});
   const [beeMessage, setBeeMessage] = useState(
-    "🐝 Bzz... Click me & save your edited magical adventure. ✨"
+    "Save your magical adventure ✨"
   );
   const [limitReached, setLimitReached] = useState(false); // Track if max pages limit is reached
   const fileInputRefs = useRef([]); // Create a ref array for file inputs
@@ -136,9 +136,7 @@ const EditStory = () => {
         });
         setTranscriptionStatuses(initialStatuses);
 
-        setBeeMessage(
-          "🐝 Bzz... Click me & save your edited magical adventure. ✨"
-        );
+        setBeeMessage("Save magical adventure ✨");
       } catch (error) {
         console.error("Error fetching story:", error);
         setBeeMessage("🐝 Oops! Couldn't load your story. Try again later.");

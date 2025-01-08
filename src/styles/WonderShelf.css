@@ -16,6 +16,7 @@
   align-items: center;
   justify-content: center;
   gap: 20px;
+  position: fixed;
 }
 
 .search-bar {
@@ -99,7 +100,7 @@
 /* Container for the list of stories */
 .story-list {
   width: 100vw;
-  margin-top: 20px;
+  margin-top: calc(100vh * 0.15);
   padding: 10px 10px 0 20px;
 
   display: flex; /* Use flexbox to align stories horizontally */
@@ -221,7 +222,7 @@
   font-family: "Comic Neue", cursive;
 }
 
-.empty-bookshelf{
+.empty-bookshelf {
   width: 100%;
 }
 

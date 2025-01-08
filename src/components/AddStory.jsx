@@ -197,9 +197,7 @@ const AddStory = () => {
   ]);
   const [errors, setErrors] = useState({ INITIAL_ERRORS });
   const [limitReached, setLimitReached] = useState(false);
-  const [beeSubmitMessage, setBeeSubmitMessage] = useState(
-    "🐝 Bzzz... Click me & submit your story!"
-  );
+  const [beeSubmitMessage, setBeeSubmitMessage] = useState("Submit your story");
   const navigate = useNavigate();
   const MAX_PAGES = 7;
   const pagesContainerRef = useRef(null);
