@@ -1,3 +1,5 @@
+import { useState, useRef, useEffect } from "react";
+
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 
@@ -7,6 +9,41 @@ const StoryContentMediaFields = ({
   audioFileRefs,
   handleFileUpload,
 }) => {
+  const [isMediaPlaying, setIsMediaPlaying] = useState(false);
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (audioRef && audioRef.current) {
+        console.log("Media: cleaned up");
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
+    };
+  }, []);
+
+  const toggleMedia = () => {
+    let mediaUrl = page.mediaUrl;
+
+    if (!audioRef.current) {
+      // Create the audio object if it doesn't exist
+      audioRef.current = new Audio(mediaUrl);
+      audioRef.current.volume = 0.25;
+    } else {
+      // Change the audio source if a new URL is provided
+      if (audioRef.current.src !== mediaUrl) {
+        audioRef.current.src = mediaUrl;
+      }
+    }
+
+    if (isMediaPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+    setIsMediaPlaying(!isMediaPlaying);
+  };
+
   return (
     <div className="page-media-buttons">
       <div
@@ -23,14 +60,9 @@ const StoryContentMediaFields = ({
           } // Assign ref to the input
           onChange={(e) => handleFileUpload(e, index, "audio")}
           className="media-field"
-          style={{
-            backgroundColor: page && page.audio ? "lightgreen" : "white", // Greyed out if media URL is provided
-            opacity: page && page.mediaUrl ? 0.5 : 1, // Adjust opacity
-          }}
-          disabled={page && !!page.mediaUrl} // Disable if media URL is provided
         />
-        {page && page.audioError && (
-          <span className="error">{page.audioError}</span>
+        {page && page.mediaUrlError && (
+          <span className="error">{page.mediaUrlError}</span>
         )}{" "}
       </div>
 
@@ -40,14 +72,14 @@ const StoryContentMediaFields = ({
         }}
       >
         {/* Play/Pause Button for Audio */}
-        {page && page.audio && !page.audioError && (
+        {page && page.mediaUrl && !page.mediaUrlError && (
           <OverlayTrigger
             placement="top"
             overlay={<Tooltip id="play-audio-tooltip">Play the audio</Tooltip>}
           >
             <button
               type="button"
-              onClick={() => toggleAudio(index)}
+              onClick={() => toggleMedia(index)}
               className="add-edit-story-buttons"
               style={{
                 backgroundColor: "transparent",
@@ -55,7 +87,7 @@ const StoryContentMediaFields = ({
                 border: "none",
               }}
             >
-              {page && page.isPlaying ? "⏸️" : "▶️"}
+              {isMediaPlaying ? "⏸️" : "▶️"}
             </button>
           </OverlayTrigger>
         )}

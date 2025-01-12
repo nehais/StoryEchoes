@@ -25,7 +25,6 @@ const AddStory = () => {
   const imageCache = new Map(); // Cache to store prompt-image mappings
   const cachedUrl = imageCache.get("debugText"); // Replace "debugText" with a test string
   console.log("Retrieved cached URL:", cachedUrl);
-  const INITIAL_GENERAL_ERROR_MESSAGE = "";
   const { setRefresh } = useStories(); //Fetched stories in Context API
   const [isStoryAdded, setIsStoryAdded] = useState(false);
   const [currentPageIndex, setCurrentPageIndex] = useState(null);
@@ -43,16 +42,6 @@ const AddStory = () => {
     setPages(updatedPages);
   };
   const CHARACTER_LIMIT = 300;
-
-  // Ensure all pages have an id before performing operations
-  const ensurePageIds = () => {
-    setPages((prevPages) =>
-      prevPages.map((page) => ({
-        ...page,
-        id: page.id || `page-${Date.now()}-${Math.random()}`, // Assign unique id if missing
-      }))
-    );
-  };
 
   const openSpeechToTextModal = (index) => {
     setCurrentPageIndex(index); // Track which page is being edited
@@ -79,38 +68,6 @@ const AddStory = () => {
   const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
   const recognition = SpeechRecognition ? new SpeechRecognition() : null;
-
-  const startListening = () => {
-    if (!recognition) {
-      alert("Speech Recognition is not supported in this browser.");
-      return;
-    }
-
-    recognition.start();
-
-    recognition.onresult = (event) => {
-      const transcript = event.results[0][0].transcript;
-      console.log("Transcript:", transcript); // Log the recognized text
-      handleModalSubmit(transcript); // Call the modal submit handler with the transcript
-    };
-
-    recognition.onerror = (event) => {
-      console.error("Speech recognition error:", event.error);
-    };
-
-    recognition.onend = () => {
-      console.log("Speech recognition ended");
-    };
-  };
-
-  const scrollToPage = (pageIndex) => {
-    const pageElement = document.querySelector(
-      `[data-page-index="${pageIndex}"]`
-    );
-    if (pageElement) {
-      pageElement.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
-  };
 
   useEffect(() => {
     return () => {
@@ -182,22 +139,18 @@ const AddStory = () => {
       page: 1,
       text: "",
       image: null,
-      audio: null,
-      imageFileName: "", // Track image file name
-      audioFileName: "", // Track audio file name
       mediaUrl: "",
       imageError: null,
-      audioError: null,
       mediaUrlError: null,
-      isPlaying: false, // Track audio playing state
-      audioInstance: null, // Store audio instance
       isGenerating: false, // Track if AI image is being generated
       imageGenerated: false,
     },
   ]);
   const [errors, setErrors] = useState({ INITIAL_ERRORS });
   const [limitReached, setLimitReached] = useState(false);
-  const [beeSubmitMessage, setBeeSubmitMessage] = useState("Submit your story");
+  const [beeSubmitMessage, setBeeSubmitMessage] = useState(
+    "Submit your story ✨"
+  );
   const navigate = useNavigate();
   const MAX_PAGES = 7;
   const pagesContainerRef = useRef(null);
@@ -418,13 +371,9 @@ const AddStory = () => {
           page: prevPages.length + 1,
           text: "",
           image: null,
-          audio: null,
           mediaUrl: "",
           imageError: null,
-          audioError: null,
           mediaUrlError: null,
-          isPlaying: false, // Initialize playing state
-          audioInstance: null, // Initialize audio instance
           isGenerating: false, // Initialize generating state
           newlyAdded: true,
         },
@@ -536,7 +485,9 @@ const AddStory = () => {
       } else if (type === "audio") {
         setPages((prevPages) =>
           prevPages.map((page, i) =>
-            i === index ? { ...page, audio: null, audioError: null } : page
+            i === index
+              ? { ...page, mediaUrl: null, mediaUrlError: null }
+              : page
           )
         );
       }
@@ -652,8 +603,8 @@ const AddStory = () => {
             i === index
               ? {
                   ...page,
-                  audio: null,
-                  audioError:
+                  mediaUrl: null,
+                  mediaUrlError:
                     "Error!. Supported formats: .mp3, .mp4, .wav, .ogg.",
                 }
               : page
@@ -698,7 +649,7 @@ const AddStory = () => {
           setPages((prevPages) =>
             prevPages.map((page, i) =>
               i === index
-                ? { ...page, audio: uploadedUrl, audioError: null }
+                ? { ...page, mediaUrl: uploadedUrl, mediaUrlError: null }
                 : page
             )
           );
@@ -816,7 +767,6 @@ const AddStory = () => {
       content: pages.map((page) => ({
         ...page,
         image: page.image || FallbackImage,
-        audio: page.audio || null, // Include audio if present
         mediaUrl: page.mediaUrl || null,
       })),
     };
@@ -853,59 +803,6 @@ const AddStory = () => {
       console.error("Error submitting story:", error);
       alert("Error submitting story. Please try again.");
     }
-  };
-  const toggleAudio = (index) => {
-    const updatedPages = [...pages];
-    const page = updatedPages[index];
-
-    if (page.audioInstance) {
-      // If audio is already playing, pause it
-      page.audioInstance.pause();
-      page.audioInstance = null; // Reset audio instance
-    } else {
-      // Create a new audio instance and play it
-      const audio = new Audio(page.audio); // Use `page.audio` instead of `page.mediaUrl` if needed
-      audio.play();
-      updatedPages[index].audioInstance = audio; // Store the audio instance
-    }
-
-    // Update the playing state
-    updatedPages[index] = { ...page, isPlaying: !page.isPlaying };
-    setPages(updatedPages);
-  };
-
-  const toggleMediaPlay = (index) => {
-    const updatedPages = [...pages];
-    const page = updatedPages[index];
-
-    if (page.mediaInstance) {
-      // If media is already playing, pause it
-      page.mediaInstance.pause();
-      page.mediaInstance = null; // Reset the media instance
-    } else {
-      try {
-        // Check if media URL is valid and create a new Audio instance
-        const media = new Audio(page.mediaUrl);
-        media.play();
-        page.mediaInstance = media; // Store the media instance
-
-        // Set mediaPlaying to false when the media ends
-        media.onended = () => {
-          setPages((prevPages) =>
-            prevPages.map((p, i) =>
-              i === index ? { ...p, isPlaying: false, mediaInstance: null } : p
-            )
-          );
-        };
-      } catch (error) {
-        console.error("Error playing media:", error);
-        return;
-      }
-    }
-
-    // Toggle playing state
-    updatedPages[index] = { ...page, isPlaying: !page.isPlaying };
-    setPages(updatedPages);
   };
 
   return (
@@ -972,7 +869,7 @@ const AddStory = () => {
                   handleModalSubmit={handleModalSubmit}
                   currentPageIndex={currentPageIndex}
                   errors={errors}
-                ></StoryTextImageFields>
+                />
 
                 {/* Image Button Area */}
                 <StoryImageButtons
@@ -981,15 +878,15 @@ const AddStory = () => {
                   imageFileRefs={imageFileRefs}
                   handleFileUpload={handleFileUpload}
                   handleImageGenerated={handleImageGenerated}
-                ></StoryImageButtons>
+                />
 
                 {/* Media Area */}
-                <StoryContentMediaFields>
+                <StoryContentMediaFields
                   page={page}
                   index={index}
                   audioFileRefs={audioFileRefs}
                   handleFileUpload={handleFileUpload}
-                </StoryContentMediaFields>
+                />
 
                 <div
                   className="page-buttons"

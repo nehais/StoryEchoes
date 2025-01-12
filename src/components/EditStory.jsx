@@ -37,15 +37,9 @@ const EditStory = () => {
       page: 1,
       text: "",
       image: null,
-      audio: null,
-      imageFileName: "", // Track image file name
-      audioFileName: "", // Track audio file name
       mediaUrl: "",
       imageError: null,
-      audioError: null,
       mediaUrlError: null,
-      isPlaying: false, // Track audio playing state
-      audioInstance: null, // Store audio instance
       isGenerating: false, // Track if AI image is being generated
       imageGenerated: false,
     },
@@ -114,7 +108,7 @@ const EditStory = () => {
   useEffect(() => {
     const fetchStory = async () => {
       try {
-        setBeeMessage("🐝 Loading your story...");
+        setBeeMessage("Loading your story...");
         const response = await fetch(`${API_URL}/stories/${id}`);
         if (!response.ok) {
           throw new Error(`Failed to fetch story. Status: ${response.status}`);
@@ -139,7 +133,7 @@ const EditStory = () => {
         setBeeMessage("Save magical adventure ✨");
       } catch (error) {
         console.error("Error fetching story:", error);
-        setBeeMessage("🐝 Oops! Couldn't load your story. Try again later.");
+        setBeeMessage("Oops! Couldn't load your story. Try again later.");
       }
     };
 
@@ -216,7 +210,9 @@ const EditStory = () => {
       } else if (type === "audio") {
         setPages((prevPages) =>
           prevPages.map((page, i) =>
-            i === index ? { ...page, audio: null, audioError: null } : page
+            i === index
+              ? { ...page, mediaUrl: null, mediaUrlError: null }
+              : page
           )
         );
       }
@@ -331,8 +327,8 @@ const EditStory = () => {
             i === index
               ? {
                   ...page,
-                  audio: null,
-                  audioError:
+                  mediaUrl: null,
+                  mediaUrlError:
                     "Invalid File. Supported formats: .mp3, .mp4, .wav, .ogg.",
                 }
               : page
@@ -377,7 +373,7 @@ const EditStory = () => {
           setPages((prevPages) =>
             prevPages.map((page, i) =>
               i === index
-                ? { ...page, audio: uploadedUrl, audioError: null }
+                ? { ...page, mediaUrl: uploadedUrl, mediaUrlError: null }
                 : page
             )
           );
@@ -485,13 +481,9 @@ ${pageNumbers}.`;
           page: prevPages.length + 1,
           text: "",
           image: null,
-          audio: null,
           mediaUrl: "",
           imageError: null,
-          audioError: null,
           mediaUrlError: null,
-          isPlaying: false, // Initialize playing state
-          audioInstance: null, // Initialize audio instance
           isGenerating: false, // Initialize generating state
           newlyAdded: true,
         },
@@ -821,7 +813,7 @@ ${pageNumbers}.`;
     };
 
     try {
-      setBeeMessage("🐝 Saving your edits...");
+      setBeeMessage("Saving your edits...");
       const response = await fetch(`${API_URL}/stories/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -836,66 +828,12 @@ ${pageNumbers}.`;
           navigate(`/readStory/${id}`);
         }, 2000);
       } else {
-        setBeeMessage("🐝 Oh no! Couldn't save your story. Try again.");
+        setBeeMessage("Oh no! Couldn't save your story. Try again.");
       }
     } catch (error) {
       console.error("Error saving story:", error);
-      setBeeMessage("🐝 Something went wrong. Please try again.");
+      setBeeMessage("Something went wrong. Please try again.");
     }
-  };
-
-  const toggleAudio = (index) => {
-    const updatedPages = [...pages];
-    const page = updatedPages[index];
-
-    if (page.audioInstance) {
-      // If audio is already playing, pause it
-      page.audioInstance.pause();
-      page.audioInstance = null; // Reset audio instance
-    } else {
-      // Create a new audio instance and play it
-      const audio = new Audio(page.audio); // Use `page.audio` instead of `page.mediaUrl` if needed
-      audio.play();
-      updatedPages[index].audioInstance = audio; // Store the audio instance
-    }
-
-    // Update the playing state
-    updatedPages[index] = { ...page, isPlaying: !page.isPlaying };
-    setPages(updatedPages);
-  };
-
-  const toggleMediaPlay = (index) => {
-    const updatedPages = [...pages];
-    const page = updatedPages[index];
-
-    if (page.mediaInstance) {
-      // If media is already playing, pause it
-      page.mediaInstance.pause();
-      page.mediaInstance = null; // Reset the media instance
-    } else {
-      try {
-        // Check if media URL is valid and create a new Audio instance
-        const media = new Audio(page.mediaUrl);
-        media.play();
-        page.mediaInstance = media; // Store the media instance
-
-        // Set mediaPlaying to false when the media ends
-        media.onended = () => {
-          setPages((prevPages) =>
-            prevPages.map((p, i) =>
-              i === index ? { ...p, isPlaying: false, mediaInstance: null } : p
-            )
-          );
-        };
-      } catch (error) {
-        console.error("Error playing media:", error);
-        return;
-      }
-    }
-
-    // Toggle playing state
-    updatedPages[index] = { ...page, isPlaying: !page.isPlaying };
-    setPages(updatedPages);
   };
 
   useEffect(() => {
@@ -969,7 +907,7 @@ ${pageNumbers}.`;
                   handlePageTextChange={handlePageTextChange}
                   temporaryComponent={temporaryComponent}
                   errors={errors}
-                ></StoryTextImageFields>
+                />
 
                 {/* Image Button Area */}
                 <StoryImageButtons
@@ -978,16 +916,15 @@ ${pageNumbers}.`;
                   imageFileRefs={imageFileRefs}
                   handleFileUpload={handleFileUpload}
                   handleImageGenerated={handleImageGenerated}
-                ></StoryImageButtons>
+                />
 
                 {/* Media Area */}
-
-                <StoryContentMediaFields>
+                <StoryContentMediaFields
                   page={page}
                   index={index}
                   audioFileRefs={audioFileRefs}
                   handleFileUpload={handleFileUpload}
-                </StoryContentMediaFields>
+                />
 
                 <div
                   className="page-buttons"
