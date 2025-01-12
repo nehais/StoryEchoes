@@ -625,6 +625,52 @@ body,
   border-radius: 4px;
 }
 
+.speech-to-text-modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.speech-to-text-modal {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 500px;
+
+  textarea {
+    width: 100%;
+    height: 150px;
+    font-size: 16px;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    color: #333;
+    cursor: not-allowed; /* Indicate readonly*/
+    white-space: pre-wrap; /* Preserve new lines*/
+  }
+
+  p {
+    color: red;
+    font-size: 12px;
+  }
+}
+
+.speech-to-text-buttons {
+  padding: 10px 20px;
+  font-size: 14px;
+  margin: 0 5px;
+  color: white;
+  border: none;
+}
+
 /* Responsive Design */
 @media (max-width: 2000px) {
   .front-cover-group {

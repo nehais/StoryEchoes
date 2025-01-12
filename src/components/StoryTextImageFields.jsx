@@ -1,5 +1,5 @@
 import micIcon from "../assets/mic.png";
-import SpeechToTextModal from "./Speechtotext"; //Import the Speech to text component
+import SpeechToTextModal from "./SpeechToText.jsx"; //Import the Speech to text component
 
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
