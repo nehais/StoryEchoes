@@ -21,6 +21,20 @@ const BookCoverFields = ({
 }) => {
   const [isDoodleOpen, setIsDoodleOpen] = useState(false); // Controls the Doodle modal
 
+  const getFileName = () => {
+    let fileLabel;
+    if (!frontCover) {
+      fileLabel = "No file selected";
+    } else {
+      let theSplit = frontCover.split("\\");
+      fileLabel = theSplit[theSplit.length - 1];
+      if (fileLabel.length > 20) {
+        fileLabel = fileLabel.slice(0, 20) + "...";
+      }
+    }
+    return fileLabel;
+  };
+
   // Function to handle Doodle Save
   const handleDoodleGenerated = async (blob) => {
     try {
@@ -116,13 +130,15 @@ const BookCoverFields = ({
             }`}
           >
             <label>Front Cover</label>
-            <input
-              type="file"
-              ref={frontCoverFileRef}
-              accept="image/*"
-              onChange={(e) => handleFileUpload(e, null, "image")}
-              className="image-field"
-            />
+            <div className="input-cover-field">
+              <input
+                type="file"
+                ref={frontCoverFileRef}
+                accept="image/*"
+                onChange={(e) => handleFileUpload(e, null, "image")}
+              />
+              <label className="file-name media-field">{getFileName()}</label>
+            </div>
           </div>
 
           {/* "Create a Doodle" Button */}

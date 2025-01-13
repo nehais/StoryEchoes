@@ -224,7 +224,7 @@ body,
 }
 
 .doodle-button {
-  width: 35%;
+  width: 27%;
   padding: 45px 0 0 10px;
   button {
     border: 2px solid #28c4ac;
@@ -318,16 +318,6 @@ body,
   border-radius: 10px;
 }
 
-.front-cover-group input {
-  width: 100%;
-  max-width: 600px;
-  padding: 10px;
-  font-size: 1.2rem;
-  border: 2px solid rgb(104, 223, 201);
-  border-radius: 8px;
-  box-sizing: border-box;
-}
-
 .front-cover-group .add-image-icon {
   position: absolute;
   top: 270px;
@@ -351,7 +341,7 @@ body,
   font-size: 1.25em;
 }
 
-.form-group input,
+.form-group input[type="text"],
 .form-group textarea {
   background-color: white;
   color: black;
@@ -419,7 +409,6 @@ body,
   margin-bottom: 5px;
 }
 
-.page-input-group input,
 .page-input-group textarea {
   width: 100%;
   padding: 2px 10px;
@@ -429,6 +418,47 @@ body,
   font-family: "Bubblegum Sans", cursive;
   background-color: white;
   color: black;
+}
+
+.input-cover-field {
+  display: flex;
+  gap: 1px;
+  justify-content: flex-start;
+
+  .file-name {
+    width: 62%;
+    height: 28px;
+    padding: 4px;
+    color: #000;
+    font-size: 0.8em !important;
+    text-align: left;
+    background-color: lightslategray;
+  }
+}
+
+.input-cover-field input[type="file"] {
+  width: 37%;
+  color: transparent;
+}
+
+.input-file-field {
+  width: 40%;
+  display: flex;
+
+  .file-name {
+    width: 68%;
+    height: 30px;
+    font-size: 1em !important;
+    text-align: left;
+    padding: 5px;
+    background-color: lightgrey;
+    overflow: hidden;
+  }
+}
+
+.input-file-field input[type="file"] {
+  width: 32%;
+  color: transparent;
 }
 
 /* Page Image Icon */
@@ -459,6 +489,20 @@ body,
 .page-media-buttons {
   display: flex;
   margin-bottom: 10px;
+}
+
+.media-button {
+  padding: 5px 10px;
+  background-color: transparent;
+  border: none;
+
+  img {
+    width: 20px;
+    padding: 0;
+    border: none;
+    background-color: grey;
+    border-radius: 50%;
+  }
 }
 
 /* Add/Delete Button Container */
@@ -706,7 +750,7 @@ body,
 }
 
 /*Tablet Screen */
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .story-container {
     padding: 0;
   }
@@ -722,11 +766,14 @@ body,
 
   .front-cover-group input {
     font-size: 0.9rem;
-    padding: 8px;
   }
 
   .pages-container {
     max-height: 53vh;
+  }
+
+  .doodle-button {
+    width: 30%;
   }
 }
 
@@ -744,8 +791,15 @@ body,
     font-size: 1em;
   }
 
-  .front-cover-group input {
-    padding: 2px 10px;
+  .input-cover-field input[type="file"] {
+    width: 60%;
+  }
+
+  .input-cover-field {
+    .file-name {
+      width: 38%;
+      height: 26px;
+    }
   }
 
   .front-cover-create {
@@ -773,5 +827,17 @@ body,
 
   .pages-container {
     max-height: 48vh;
+  }
+
+  .input-file-field input[type="file"] {
+    width: 62%;
+    font-size: 0.8em;
+  }
+
+  .input-file-field {
+    .file-name {
+      width: 38%;
+      height: 26px;
+    }
   }
 }

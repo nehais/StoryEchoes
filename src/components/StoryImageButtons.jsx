@@ -8,20 +8,33 @@ const StoryImageButtons = ({
   handleFileUpload,
   handleImageGenerated,
 }) => {
+  const getFileName = () => {
+    let fileLabel;
+    if (!page || (page && !page.image)) {
+      fileLabel = "No file selected";
+    } else {
+      let theSplit = page.image.split("\\");
+      fileLabel = theSplit[theSplit.length - 1];
+      if (fileLabel.length > 25) {
+        fileLabel = fileLabel.slice(0, 25) + "...";
+      }
+    }
+    return fileLabel;
+  };
+
   return (
     <>
       <div className="page-image-buttons" style={{ marginTop: "10px" }}>
-        {/* File Upload for Image */}
-        <input
-          type="file"
-          accept="image/*"
-          ref={(el) => (imageFileRefs.current[index] = el)} // Assign ref to the input
-          onChange={(e) => handleFileUpload(e, index, "image")}
-          className="image-field"
-          style={{
-            width: "40%",
-          }}
-        />
+        <div className="input-file-field">
+          {/* File Upload for Image */}
+          <input
+            type="file"
+            accept="image/*"
+            ref={(el) => (imageFileRefs.current[index] = el)} // Assign ref to the input
+            onChange={(e) => handleFileUpload(e, index, "image")}
+          />
+          <label className="file-name image-field">{getFileName()}</label>
+        </div>
 
         {page.text.trim() && (
           <div>

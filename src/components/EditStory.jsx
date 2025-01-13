@@ -825,7 +825,7 @@ ${pageNumbers}.`;
         //Indicate Context API for refresh
         setRefresh((prev) => prev + 1);
         setTimeout(() => {
-          navigate(`/readStory/${id}`);
+          navigate(`/readStory/${_id ? _id : id}`);
         }, 2000);
       } else {
         setBeeMessage("Oh no! Couldn't save your story. Try again.");

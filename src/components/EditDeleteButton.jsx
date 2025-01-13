@@ -30,7 +30,7 @@ const EditDeleteButton = ({ story }) => {
     }
 
     //Navigate to the edit page for the story
-    navigate(`/editStory/${story.id}`);
+    navigate(`/editStory/${story._id ? story._id : story.id}`);
   }
 
   function checkDelete(e) {

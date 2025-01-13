@@ -80,7 +80,7 @@ const StoryGridView = ({ filteredBooks, mode }) => {
         {/* Display book cards with cover, title & author */}
         {listBooks.map((story) => (
           <div key={story.id} className="story-item">
-            <Link to={`/readStory/${story.id}`}>
+            <Link to={`/readStory/${story._id ? story._id : story.id}`}>
               <div className="story-card">
                 <img src={story.front_cover} alt={`${story.title} Tile`} />
                 <h2>{story.title}</h2>

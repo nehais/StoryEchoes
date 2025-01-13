@@ -1,5 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 
+import playIcon from "../assets/play.png";
+import stopIcon from "../assets/stop.png";
+
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 
@@ -20,7 +23,21 @@ const StoryContentMediaFields = ({
         audioRef.current.currentTime = 0;
       }
     };
-  }, []);
+  }, [page]);
+
+  const getFileName = () => {
+    let fileLabel;
+    if (!page || (page && !page.mediaUrl)) {
+      fileLabel = "No file selected";
+    } else {
+      let theSplit = page.mediaUrl.split("\\");
+      fileLabel = theSplit[theSplit.length - 1];
+      if (fileLabel.length > 25) {
+        fileLabel = fileLabel.slice(0, 25) + "...";
+      }
+    }
+    return fileLabel;
+  };
 
   const toggleMedia = () => {
     let mediaUrl = page.mediaUrl;
@@ -46,11 +63,7 @@ const StoryContentMediaFields = ({
 
   return (
     <div className="page-media-buttons">
-      <div
-        style={{
-          width: "40%",
-        }}
-      >
+      <div className="input-file-field">
         {/* Audio File Input */}
         <input
           type="file"
@@ -59,39 +72,37 @@ const StoryContentMediaFields = ({
             audioFileRefs ? (audioFileRefs.current[index] = el) : null
           } // Assign ref to the input
           onChange={(e) => handleFileUpload(e, index, "audio")}
-          className="media-field"
         />
-        {page && page.mediaUrlError && (
-          <span className="error">{page.mediaUrlError}</span>
-        )}{" "}
+        <label className="file-name media-field">{getFileName()}</label>
       </div>
-
-      <div
-        style={{
-          alignSelf: "flex-start",
-        }}
-      >
+      <div>
         {/* Play/Pause Button for Audio */}
         {page && page.mediaUrl && !page.mediaUrlError && (
           <OverlayTrigger
             placement="top"
-            overlay={<Tooltip id="play-audio-tooltip">Play the audio</Tooltip>}
+            overlay={
+              <Tooltip id="play-audio-tooltip">
+                {isMediaPlaying ? "Stop the audio" : "Play the audio"}
+              </Tooltip>
+            }
           >
             <button
               type="button"
               onClick={() => toggleMedia(index)}
-              className="add-edit-story-buttons"
-              style={{
-                backgroundColor: "transparent",
-                padding: "5px 0 0 10px",
-                border: "none",
-              }}
+              className="add-edit-story-buttons media-button"
             >
-              {isMediaPlaying ? "⏸️" : "▶️"}
+              <img
+                className="media-button"
+                src={isMediaPlaying ? stopIcon : playIcon}
+                alt="Play Media Icon"
+              />
             </button>
           </OverlayTrigger>
         )}
       </div>
+      {page && page.mediaUrlError && (
+        <span className="error">{page.mediaUrlError}</span>
+      )}{" "}
     </div>
   );
 };

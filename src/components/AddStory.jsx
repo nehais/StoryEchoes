@@ -16,6 +16,8 @@ import StoryTextImageFields from "./StoryTextImageFields.jsx";
 import StoryImageButtons from "./StoryImageButtons.jsx";
 import StoryContentMediaFields from "./StoryContentMediaFields.jsx";
 
+import { uploadToCloudinary } from "../utils/cloudinaryUpload";
+
 const AddStory = () => {
   const INITIAL_PAGES = [];
   const imageFileRefs = useRef([]);
@@ -228,13 +230,10 @@ const AddStory = () => {
       console.log("Generated image cached successfully:", generatedImageUrl);
 
       // Step 6: Upload and Save Image URL in Parallel
-      const [uploadedImageUrl] = await Promise.all([
-        uploadImageToCloudinary(generatedImageUrl),
-        saveImageUrlToDatabase(generatedImageUrl),
-      ]);
-      console.log(
-        "Image uploaded successfully to Cloudinary:",
-        uploadedImageUrl
+      console.log("Uploading Image...");
+      const uploadedImageUrl = await uploadToCloudinary(
+        generatedImageUrl,
+        "Image"
       );
 
       // Step 7: Update State with Final Image URL
@@ -306,52 +305,6 @@ const AddStory = () => {
         />
       );
     });
-  };
-
-  const uploadImageToCloudinary = async (imageFile) => {
-    const formData = new FormData();
-    formData.append("file", imageFile);
-    formData.append("upload_preset", "StoryEchoes");
-
-    console.time("Cloudinary API Call");
-    try {
-      console.log("Uploading image to Cloudinary...");
-      const response = await axios.post(
-        "https://api.cloudinary.com/v1_1/dhxwg8gcz/upload",
-        formData
-      );
-      console.log("Cloudinary response:", response.data);
-      console.timeEnd("Cloudinary API Call");
-      return response.data.secure_url; // Return the URL of the uploaded image
-    } catch (error) {
-      console.error("Error during Cloudinary upload:", error);
-      console.timeEnd("Cloudinary API Call");
-      throw new Error("Image upload failed");
-    }
-  };
-
-  const saveImageUrlToDatabase = async (imageUrl, index) => {
-    const pageData = {
-      page: index,
-      image: imageUrl,
-      storyId: "",
-    };
-
-    console.time("Database API Call");
-    try {
-      console.log("Sending image data to the database...");
-      const response = await axios.post(`${API_URL}/stories`, pageData);
-      if (response.status === 201) {
-        console.log("Image URL saved successfully:", response.data);
-      } else {
-        console.error("Database responded with an error:", response);
-      }
-      console.timeEnd("Database API Call");
-    } catch (error) {
-      console.error("Error during database save:", error);
-      console.timeEnd("Database API Call");
-      throw new Error("Database save failed");
-    }
   };
 
   const addPage = () => {
@@ -494,22 +447,6 @@ const AddStory = () => {
       return;
     }
 
-    const uploadAudioToCloudinary = async (audioFile) => {
-      const formData = new FormData();
-      formData.append("file", audioFile);
-      formData.append("upload_preset", "your_upload_preset"); // Replace with your Cloudinary upload preset
-
-      try {
-        const response = await axios.post(
-          "https://api.cloudinary.com/v1_1/your_cloud_name/video/upload",
-          formData
-        );
-        return response.data.secure_url; // Return the URL of the uploaded audio
-      } catch (error) {
-        console.error("Error uploading audio:", error);
-        throw new Error("Audio upload failed");
-      }
-    };
     const validImageExtensions = /\.(jpg|jpeg|png|gif|webp)$/i; // Only image formats
     const validAudioExtensions = /\.(mp3|mp4|wav|ogg)$/i; // Audio formats including mp4
 
@@ -548,20 +485,12 @@ const AddStory = () => {
         )
       );
 
-      // Upload the image to Cloudinary
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", "StoryEchoes");
-
       try {
-        const response = await axios.post(
-          "https://api.cloudinary.com/v1_1/dhxwg8gcz/upload",
-          formData
-        );
+        // Upload the image to Cloudinary
+        console.log("Uploading Image...");
+        const uploadedUrl = await uploadToCloudinary(file, "Image"); // Upload to Cloudinary
 
-        if (response.data.secure_url) {
-          const uploadedUrl = response.data.secure_url;
-
+        if (uploadedUrl) {
           // Update the state with the uploaded image
           setPages((prevPages) =>
             prevPages.map((page, i) =>
@@ -791,7 +720,11 @@ const AddStory = () => {
         setRefresh((prev) => prev + 1);
 
         setTimeout(() => {
-          navigate(`/readStory/${responseData.id}?state=new`);
+          navigate(
+            `/readStory/${
+              responseData._id ? responseData._id : responseData.id
+            }?state=new`
+          );
         }, 2000);
       } else {
         // Handle server errors
