@@ -1,6 +1,5 @@
 // WhoWeAre.jsx
 import { Link } from "react-router-dom";
-import "../styles/WhoWeAre.css"; // Import your CSS for styling
 
 // Make sure the image files are imported
 import Priya from "../assets/dinno.png"; // Import the profile image for Priya

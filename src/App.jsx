@@ -1,4 +1,5 @@
 import "./App.css";
+import "./styles/WhoWeAre.css"; // Import WhoWeAre CSS for styling
 
 import { Routes, Route } from "react-router-dom";
 
