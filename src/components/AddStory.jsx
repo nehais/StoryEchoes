@@ -739,7 +739,7 @@ const AddStory = () => {
   };
 
   return (
-    <div>
+    <div className="story-creator">
       <h1 className="add-story-header">Create Your Magical Adventure</h1>
       <div className="story-container">
         <form className="story-form">

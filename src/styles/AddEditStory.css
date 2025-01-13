@@ -15,6 +15,10 @@ body,
   font-weight: bold;
 }
 
+.story-creator {
+  width: 55vw;
+}
+
 /* Add Story Header */
 .add-story-header {
   font-family: "Comic Neue", cursive;
@@ -433,6 +437,7 @@ body,
     font-size: 0.8em !important;
     text-align: left;
     background-color: lightslategray;
+    overflow: hidden;
   }
 }
 
@@ -457,7 +462,7 @@ body,
 }
 
 .input-file-field input[type="file"] {
-  width: 32%;
+  width: 31%;
   color: transparent;
 }
 
@@ -500,7 +505,7 @@ body,
     width: 20px;
     padding: 0;
     border: none;
-    background-color: grey;
+    background-color: darkblue;
     border-radius: 50%;
   }
 }
@@ -751,6 +756,10 @@ body,
 
 /*Tablet Screen */
 @media (max-width: 768px) {
+  .story-creator {
+    width: 95vw;
+  }
+
   .story-container {
     padding: 0;
   }
@@ -775,10 +784,17 @@ body,
   .doodle-button {
     width: 30%;
   }
+
+  .input-file-field input[type="file"] {
+    width: 37%;
+  }
 }
 
 /*Mobile Screen*/
 @media screen and (max-device-width: 425px) {
+  .story-creator {
+    width: 100vw;
+  }
   .story-container {
     padding: 5px 15px 5px 5px;
   }

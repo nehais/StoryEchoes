@@ -848,7 +848,7 @@ ${pageNumbers}.`;
   }, []);
 
   return (
-    <div>
+    <div className="story-creator">
       <h1 className="add-story-header">Weave in your edited Magical Story</h1>
       <div className="story-container">
         <form
