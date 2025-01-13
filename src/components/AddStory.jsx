@@ -7,19 +7,16 @@ import axios from "axios";
 import { API_URL } from "../config/apiConfig.js";
 import { useStories } from "../contexts/stories.context.jsx";
 
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Tooltip from "react-bootstrap/Tooltip";
-
 import PollinationImage from "./PollinationImage.jsx";
 import BookCoverFields from "./BookCoverFields.jsx";
 import StoryTextImageFields from "./StoryTextImageFields.jsx";
 import StoryImageButtons from "./StoryImageButtons.jsx";
 import StoryContentMediaFields from "./StoryContentMediaFields.jsx";
+import PageButtons from "./PageButtons.jsx";
 
 import { uploadToCloudinary } from "../utils/cloudinaryUpload";
 
 const AddStory = () => {
-  const INITIAL_PAGES = [];
   const imageFileRefs = useRef([]);
   const audioFileRefs = useRef([]);
 
@@ -65,11 +62,6 @@ const AddStory = () => {
     }
     closeSpeechToTextModal(); // Close the modal after submission
   };
-
-  // Initialize SpeechRecognition once
-  const SpeechRecognition =
-    window.SpeechRecognition || window.webkitSpeechRecognition;
-  const recognition = SpeechRecognition ? new SpeechRecognition() : null;
 
   useEffect(() => {
     return () => {
@@ -156,7 +148,6 @@ const AddStory = () => {
   const navigate = useNavigate();
   const MAX_PAGES = 7;
   const pagesContainerRef = useRef(null);
-  const fileInputRefs = useRef([]); // Create a ref array for file inputs
 
   // Auto-scroll functionality
   useEffect(() => {
@@ -821,147 +812,15 @@ const AddStory = () => {
                   handleFileUpload={handleFileUpload}
                 />
 
-                <div
-                  className="page-buttons"
-                  style={{ display: "flex", gap: "10px" }}
-                >
-                  {/* Add Page Button (only on the last page and if limit not reached) */}
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "flex-start",
-                      alignItems: "center",
-                      gap: "10px",
-                      marginBottom: "10px",
-                    }}
-                  >
-                    {" "}
-                  </div>
-                  <div
-                    style={{
-                      width: "33%",
-                      display: "flex",
-                      justifyContent: "flex-start",
-                    }}
-                  >
-                    {index < MAX_PAGES - 1 && (
-                      <OverlayTrigger
-                        placement="top"
-                        overlay={
-                          <Tooltip id="add-page-tooltip">
-                            Add a new story page
-                          </Tooltip>
-                        }
-                      >
-                        <button
-                          type="button"
-                          onClick={addPage}
-                          className="add-edit-story-buttons"
-                          style={{
-                            fontFamily: "Bubblegum San",
-                            color: "Magenta",
-                            backgroundColor: "darkblue",
-                            fontWeight: "bold",
-                            border: "none",
-                            borderRadius: "5px",
-                            height: "35px",
-                            fontSize: "0.8em",
-                          }}
-                        >
-                          + Add
-                        </button>
-                      </OverlayTrigger>
-                    )}
-                  </div>
-                  {/* Move Up Button */}
-                  <div className="move-buttons">
-                    {index > 0 && (
-                      <OverlayTrigger
-                        placement="top"
-                        overlay={
-                          <Tooltip id="move-page-up-tooltip">
-                            Re-order the page up
-                          </Tooltip>
-                        }
-                      >
-                        <button
-                          type="button"
-                          onClick={() => movePage(index, "up")}
-                          className="add-edit-story-buttons"
-                          style={{
-                            backgroundColor: "transparent",
-                            padding: "0px",
-                            border: "none",
-                          }}
-                        >
-                          ⬆️
-                        </button>
-                      </OverlayTrigger>
-                    )}
-
-                    {/* Move Down Button */}
-                    {index >= 0 && (
-                      <OverlayTrigger
-                        placement="top"
-                        overlay={
-                          <Tooltip id="move-page-down-tooltip">
-                            Re-order the page down
-                          </Tooltip>
-                        }
-                      >
-                        <button
-                          type="button"
-                          onClick={() => movePage(index, "down")}
-                          className="add-edit-story-buttons"
-                          style={{
-                            backgroundColor: "transparent",
-                            padding: "0px",
-                            border: "none",
-                          }}
-                        >
-                          ⬇️
-                        </button>
-                      </OverlayTrigger>
-                    )}
-                  </div>
-                  {/* Delete Button */}{" "}
-                  <div
-                    style={{
-                      width: "33%",
-                      display: "flex",
-                      justifyContent: "flex-end",
-                    }}
-                  >
-                    {page.page >= 2 && (
-                      <OverlayTrigger
-                        placement="top"
-                        overlay={
-                          <Tooltip id="delete-page-tooltip">
-                            Delete the story page
-                          </Tooltip>
-                        }
-                      >
-                        <button
-                          type="button"
-                          onClick={() => deletePage(index)}
-                          className="add-edit-story-buttons"
-                          style={{
-                            fontFamily: "Bubblegum San",
-                            color: "Magenta",
-                            backgroundColor: "darkblue",
-                            fontWeight: "bold",
-                            border: "none",
-                            borderRadius: "5px",
-                            height: "35px",
-                            fontSize: "0.8em",
-                          }}
-                        >
-                          - Delete
-                        </button>
-                      </OverlayTrigger>
-                    )}
-                  </div>
-                </div>
+                {/* Page Buttons for Add Move & Delete */}
+                <PageButtons
+                  page={page}
+                  pages={pages}
+                  index={index}
+                  addPage={addPage}
+                  movePage={movePage}
+                  deletePage={deletePage}
+                />
               </div>
             ))}
 
@@ -989,22 +848,7 @@ const AddStory = () => {
           )}
 
           {/* Submit Button */}
-          <div
-            className="honey-bee-message"
-            onClick={handleSubmit}
-            style={{
-              cursor: "pointer",
-              fontFamily: "Comic Neuve, cursive",
-              fontSize: "1em", // Increased font size
-              textAlign: "center",
-              marginTop: "10px",
-              borderRadius: "10px",
-              backgroundColor: "darkblue",
-
-              border: "2px solid #28c4ac",
-              padding: "2px 5px",
-            }}
-          >
+          <div className="honey-bee-message" onClick={handleSubmit}>
             {beeSubmitMessage}
           </div>
         </form>

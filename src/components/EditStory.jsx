@@ -7,14 +7,14 @@ import axios from "axios";
 import { API_URL } from "../config/apiConfig.js";
 import { useStories } from "../contexts/stories.context.jsx";
 
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Tooltip from "react-bootstrap/Tooltip";
-
 import PollinationImage from "./PollinationImage"; // Import the PollinationImage component
 import BookCoverFields from "./BookCoverFields.jsx";
 import StoryTextImageFields from "./StoryTextImageFields.jsx";
 import StoryImageButtons from "./StoryImageButtons.jsx";
 import StoryContentMediaFields from "./StoryContentMediaFields.jsx";
+import PageButtons from "./PageButtons.jsx";
+
+import { uploadToCloudinary } from "../utils/cloudinaryUpload";
 
 const EditStory = () => {
   const { id } = useParams();
@@ -49,22 +49,10 @@ const EditStory = () => {
     "Save your magical adventure ✨"
   );
   const [limitReached, setLimitReached] = useState(false); // Track if max pages limit is reached
-  const fileInputRefs = useRef([]); // Create a ref array for file inputs
   // State for tracking transcription statuses per page
   const [transcriptionStatuses, setTranscriptionStatuses] = useState({});
   const MAX_PAGES = 7;
   const CHARACTER_LIMIT = 300; // Define your character limit
-
-  // Function to scroll to the first error field
-  const scrollToError = () => {
-    const firstErrorField = document.querySelector(".error-highlight");
-    if (firstErrorField) {
-      firstErrorField.scrollIntoView({
-        behavior: "smooth", // Smooth scrolling
-        block: "center", // Center the field vertically
-      });
-    }
-  };
 
   // Auto-scroll functionality
   useEffect(() => {
@@ -218,22 +206,7 @@ const EditStory = () => {
       }
       return;
     }
-    const uploadAudioToCloudinary = async (audioFile) => {
-      const formData = new FormData();
-      formData.append("file", audioFile);
-      formData.append("upload_preset", "your_upload_preset"); // Replace with your Cloudinary upload preset
 
-      try {
-        const response = await axios.post(
-          "https://api.cloudinary.com/v1_1/your_cloud_name/video/upload",
-          formData
-        );
-        return response.data.secure_url; // Return the URL of the uploaded audio
-      } catch (error) {
-        console.error("Error uploading audio:", error);
-        throw new Error("Audio upload failed");
-      }
-    };
     const validImageExtensions = /\.(jpg|jpeg|png|gif|webp)$/i; // Only image formats
     const validAudioExtensions = /\.(mp3|mp4|wav|ogg)$/i; // Audio formats including mp4
 
@@ -432,15 +405,6 @@ const EditStory = () => {
         "Some pages are missing content. Please review all pages to ensure they have text.";
     }
 
-    // // Validate media or image for each page
-    // pages.forEach((page, index) => {
-    // if (!page.mediaUrl?.trim() && !page.image) {
-    // newErrors[`page${index + 1}`] = `Page ${
-    // index + 1
-    // } requires either an image or a media URL.`;
-    // }
-    // });
-
     // Validate character limit
     const limitExceededPages = pages.filter(
       (page) => page.text.length > CHARACTER_LIMIT
@@ -589,33 +553,6 @@ ${pageNumbers}.`;
       return updatedPages;
     });
   };
-  // Front Cover Change Handler
-  const handleFrontCoverChange = (e) => {
-    const value = e.target.value;
-    setFrontCover(value);
-
-    // Validate URL
-    const isValidURL = (url) => {
-      const regex =
-        /^(https?:\/\/.*\.(?:jpg|jpeg|png|gif|bmp|svg|webp))$|^(.*\.(?:jpg|jpeg|png|gif|bmp|svg|webp))$/i;
-      if (!regex.test(url)) {
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          frontCover:
-            "Oops! Please enter a valid image URL for the front cover. 🖼️",
-        }));
-      } else {
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          frontCover: "",
-        }));
-      }
-    };
-
-    if (value.trim()) {
-      isValidURL(value);
-    }
-  };
 
   // Main Function to Handle Image Generation
   const handleImageGenerated = async (index, text) => {
@@ -661,13 +598,10 @@ ${pageNumbers}.`;
       console.log("Generated image cached successfully:", generatedImageUrl);
 
       // Step 6: Upload and Save Image URL in Parallel
-      const [uploadedImageUrl] = await Promise.all([
-        uploadImageToCloudinary(generatedImageUrl),
-        saveImageUrlToDatabase(generatedImageUrl),
-      ]);
-      console.log(
-        "Image uploaded successfully to Cloudinary:",
-        uploadedImageUrl
+      console.log("Uploading Image...");
+      const uploadedImageUrl = await uploadToCloudinary(
+        generatedImageUrl,
+        "Image"
       );
 
       // Step 7: Update State with Final Image URL
@@ -740,52 +674,6 @@ ${pageNumbers}.`;
       );
     });
   };
-  const uploadImageToCloudinary = async (imageFile) => {
-    const formData = new FormData();
-    formData.append("file", imageFile);
-    formData.append("upload_preset", "StoryEchoes");
-
-    console.time("Cloudinary API Call");
-    try {
-      console.log("Uploading image to Cloudinary...");
-      const response = await axios.post(
-        "https://api.cloudinary.com/v1_1/dhxwg8gcz/upload",
-        formData
-      );
-      console.log("Cloudinary response:", response.data);
-      console.timeEnd("Cloudinary API Call");
-      return response.data.secure_url; // Return the URL of the uploaded image
-    } catch (error) {
-      console.error("Error during Cloudinary upload:", error);
-      console.timeEnd("Cloudinary API Call");
-      throw new Error("Image upload failed");
-    }
-  };
-
-  const saveImageUrlToDatabase = async (imageUrl, index) => {
-    const storyId = "your_story_id";
-    const pageData = {
-      page: index,
-      image: imageUrl,
-      storyId: storyId,
-    };
-
-    console.time("Database API Call");
-    try {
-      console.log("Sending image data to the database...");
-      const response = await axios.post(`${API_URL}/stories`, pageData);
-      if (response.status === 201) {
-        console.log("Image URL saved successfully:", response.data);
-      } else {
-        console.error("Database responded with an error:", response);
-      }
-      console.timeEnd("Database API Call");
-    } catch (error) {
-      console.error("Error during database save:", error);
-      console.timeEnd("Database API Call");
-      throw new Error("Database save failed");
-    }
-  };
 
   const handleSubmit = async () => {
     // Validate and ensure submission stops if errors exist
@@ -825,7 +713,7 @@ ${pageNumbers}.`;
         //Indicate Context API for refresh
         setRefresh((prev) => prev + 1);
         setTimeout(() => {
-          navigate(`/readStory/${_id ? _id : id}`);
+          navigate(`/readStory/${id}`);
         }, 2000);
       } else {
         setBeeMessage("Oh no! Couldn't save your story. Try again.");
@@ -894,7 +782,7 @@ ${pageNumbers}.`;
                 {page.page > 1 ? (
                   <h3>--------- Page {page.page} ---------</h3>
                 ) : (
-                  <h3 style={{ fontFamily: "Bubblegum Sans", marginTop: "0" }}>
+                  <h3 style={{ marginTop: "0" }}>
                     --------- Page {page.page} ---------
                   </h3>
                 )}
@@ -926,150 +814,15 @@ ${pageNumbers}.`;
                   handleFileUpload={handleFileUpload}
                 />
 
-                <div
-                  className="page-buttons"
-                  style={{ display: "flex", gap: "10px" }}
-                >
-                  {/* Add Page Button (only on the last page and if limit not reached) */}
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "flex-start",
-                      alignItems: "center",
-                      gap: "10px",
-                      marginBottom: "10px",
-                    }}
-                  >
-                    {" "}
-                  </div>
-
-                  <div
-                    style={{
-                      width: "33%",
-                      display: "flex",
-                      justifyContent: "flex-start",
-                    }}
-                  >
-                    {index < MAX_PAGES - 1 && (
-                      <OverlayTrigger
-                        placement="top"
-                        overlay={
-                          <Tooltip id="add-page-tooltip">
-                            Add a new story page
-                          </Tooltip>
-                        }
-                      >
-                        <button
-                          type="button"
-                          onClick={addPage}
-                          className="add-edit-story-buttons"
-                          style={{
-                            fontFamily: "Bubblegum San",
-                            color: "Magenta",
-                            backgroundColor: "darkblue",
-                            fontWeight: "bold",
-                            border: "none",
-                            borderRadius: "5px",
-                            height: "35px",
-                            fontSize: "0.8em",
-                          }}
-                        >
-                          + Add
-                        </button>
-                      </OverlayTrigger>
-                    )}
-                  </div>
-
-                  {/* Move Up Button */}
-                  <div className="move-buttons">
-                    {index > 0 && (
-                      <OverlayTrigger
-                        placement="top"
-                        overlay={
-                          <Tooltip id="move-page-up-tooltip">
-                            Re-order the page up
-                          </Tooltip>
-                        }
-                      >
-                        <button
-                          type="button"
-                          onClick={() => movePage(index, "up")}
-                          className="add-edit-story-buttons"
-                          style={{
-                            backgroundColor: "transparent",
-                            padding: "0px",
-                            border: "none",
-                          }}
-                        >
-                          ⬆️
-                        </button>
-                      </OverlayTrigger>
-                    )}
-
-                    {/* Move Down Button */}
-                    {index < pages.length - 1 && (
-                      <OverlayTrigger
-                        placement="top"
-                        overlay={
-                          <Tooltip id="move-page-down-tooltip">
-                            Re-order the page down
-                          </Tooltip>
-                        }
-                      >
-                        <button
-                          type="button"
-                          onClick={() => movePage(index, "down")}
-                          className="add-edit-story-buttons"
-                          style={{
-                            backgroundColor: "transparent",
-                            padding: "0px",
-                            border: "none",
-                          }}
-                        >
-                          ⬇️
-                        </button>
-                      </OverlayTrigger>
-                    )}
-                  </div>
-
-                  {/* Delete Button */}
-                  <div
-                    style={{
-                      width: "33%",
-                      display: "flex",
-                      justifyContent: "flex-end",
-                    }}
-                  >
-                    {page.page >= 2 && (
-                      <OverlayTrigger
-                        placement="top"
-                        overlay={
-                          <Tooltip id="delete-page-tooltip">
-                            Delete the story page
-                          </Tooltip>
-                        }
-                      >
-                        <button
-                          type="button"
-                          onClick={() => deletePage(index)}
-                          className="add-edit-story-buttons"
-                          style={{
-                            fontFamily: "Bubblegum San",
-                            color: "Magenta",
-                            backgroundColor: "darkblue",
-                            fontWeight: "bold",
-                            border: "none",
-                            borderRadius: "5px",
-                            height: "35px",
-                            fontSize: "0.8em",
-                          }}
-                        >
-                          - Delete
-                        </button>
-                      </OverlayTrigger>
-                    )}
-                  </div>
-                </div>
+                {/* Page Buttons for Add Move & Delete */}
+                <PageButtons
+                  page={page}
+                  pages={pages}
+                  index={index}
+                  addPage={addPage}
+                  movePage={movePage}
+                  deletePage={deletePage}
+                />
               </div>
             ))}
 
@@ -1097,22 +850,7 @@ ${pageNumbers}.`;
           )}
 
           {/* Submit Button */}
-          <div
-            className="honey-bee-message"
-            onClick={handleSubmit}
-            style={{
-              cursor: "pointer",
-              fontFamily: "Comic Neuve, cursive",
-              fontSize: "1em", // Increased font size
-              textAlign: "center",
-              marginTop: "10px",
-              borderRadius: "10px",
-              backgroundColor: "darkblue",
-
-              border: "2px solid #28c4ac",
-              padding: "2px 5px",
-            }}
-          >
+          <div className="honey-bee-message" onClick={handleSubmit}>
             {beeMessage}
           </div>
         </form>

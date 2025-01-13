@@ -102,11 +102,6 @@ body,
   transform: scale(1.2); /* Slightly larger on hover */
 }
 
-.add-page-button:hover,
-.delete-page-button:hover {
-  transform: scale(1.1);
-}
-
 /* Limit Reached Message */
 .limit-message {
   color: #003d99;
@@ -209,18 +204,31 @@ body,
   background-color: #0056b3;
 }
 
+.honey-bee-message {
+  font-size: 1em;
+  font-weight: bold;
+  color: white;
+  background-color: darkblue;
+  border: 2px solid #28c4ac;
+  border-radius: 10px;
+
+  cursor: pointer;
+  padding: 5px 5px;
+  height: 35px;
+}
+
 .honey-bee-message:hover {
   transform: scale(1.05);
 }
 
 .add-edit-story-buttons {
   background-color: darkblue;
-  color: magenta;
+  color: white;
   font-weight: bold;
-  padding: 5px 5px;
-  /*height: 37px;
   font-size: 1em;
-  border-radius: 10px;*/
+  padding: 4px 4px;
+  height: 35px;
+  border: 2px solid #28c4ac;
 }
 
 .add-edit-story-buttons:hover {
@@ -251,15 +259,6 @@ body,
   max-height: 37px;
 }
 
-/* Full Page Background */
-body {
-  margin: 0;
-  padding: 0;
-  background: white;
-  font-family: "Comic Neue", cursive;
-  color: #cb33a5;
-}
-
 /* General Error Message Styling */
 .error {
   font-family: "Comic Neue", cursive;
@@ -267,14 +266,6 @@ body {
   font-weight: bold;
   font-size: 0.85rem;
   text-align: left;
-}
-
-/* Bold All Text */
-body,
-.form-group label,
-.submit-button::after,
-.page-input-group h3 {
-  font-weight: bold;
 }
 
 /* Title and Author Fields Container */
@@ -518,46 +509,10 @@ body,
   margin-top: 10px;
 }
 
-.add-page-button,
-.delete-page-button {
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1.2rem;
-}
-
-.add-page-button {
-  background-color: #4caf50;
-  color: white;
-}
-
-.delete-page-button {
-  background-color: #f44336;
-  color: white;
-  display: block;
-}
-
-.add-page-button:hover,
-.delete-page-button:hover {
-  opacity: 0.8;
-}
-
-/* Positioning of the Delete Button */
-.page-input-group .delete-page-button {
-  position: absolute;
-  top: 5px; /* Place it near the top of the content area */
-  right: 40px; /* Align to the top-right corner, adjust the value to position it correctly */
-  width: 30px;
-  height: 30px;
-  background-size: contain;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-  background: url("../assets/delete-button.gif") center/contain no-repeat;
-}
-
-.delete-page-button:hover {
-  transform: scale(1.1);
+.page-add-button {
+  width: 33%;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .move-buttons {
@@ -565,6 +520,24 @@ body,
   display: flex;
   justify-content: center;
   gap: 30px;
+}
+
+.move-button {
+  padding: 0;
+  background-color: transparent;
+  border: none;
+
+  img {
+    width: 20px;
+    padding: 0;
+    border: none;
+  }
+}
+
+.page-delete-button {
+  width: 33%;
+  display: flex;
+  justify-content: flex-end;
 }
 
 /* Submit Section */
@@ -833,7 +806,7 @@ body,
 
   .front-cover-img {
     width: 20%;
-    margin-right: 15px;
+    margin-right: 10px;
     padding: 20px 0 0 0;
     img {
       width: 70px;

@@ -55,14 +55,8 @@ const StoryImageButtons = ({
                 className="add-edit-story-buttons"
                 style={{
                   backgroundColor: page.isGenerating ? "white" : "darkblue",
-                  color: "Magenta",
-                  fontfamily: "Bubblegum San",
-                  fontWeight: "bold",
                   cursor: page.isGenerating ? "not-allowed" : "pointer",
-                  border: "none",
-                  borderRadius: "5px",
-                  height: "35px",
-                  fontSize: "0.8em",
+                  color: page.isGenerating ? "magenta" : "white",
                 }}
               >
                 {page.isGenerating ? "Generating..." : "Generate Image"}
