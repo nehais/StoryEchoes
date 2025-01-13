@@ -8,7 +8,7 @@ import Footer from "./components/Footer";
 import AddStory from "./components/AddStory";
 import ReadStory from "./pages/ReadStory";
 import WonderShelf from "./pages/WonderShelf";
-import Whoweare from "./pages/Whoweare";
+import WhoWeAre from "./pages/WhoWeAre";
 import EditStory from "./components/EditStory";
 import PageNotFound from "./components/PageNotFound";
 
@@ -22,7 +22,7 @@ function App() {
           <Route path="/wonderShelf" element={<WonderShelf />} />
           <Route path="/addStory" element={<AddStory />} />
           <Route path="/editStory/:id" element={<EditStory />} />
-          <Route path="/who-we-are" element={<Whoweare />} />
+          <Route path="/who-we-are" element={<WhoWeAre />} />
           {/* Route for reading the story */}
           {/* Updated route to handle dynamic story IDs */}
           <Route path="/readStory/:id" element={<ReadStory />} />
