@@ -13,10 +13,16 @@ function WhoWeAre() {
     <>
       <div className="about-main-content">
         <div className="about-container">
-          <h2 className="about-site-title">Story Echoes... Echo your imagination, one story at a time.</h2>
-          <h4 className="about-site-desc">Create, read, and explore stories like never before! This site lets kids craft their own books by doodling covers, adding images, 
-            recording their voices, and even turning their stories into awesome AI art. Plus, if reading's tricky, they can listen to the book being narrated! 
-            It’s a magical mix of creativity, tech, and fun!</h4>
+          <h2 className="about-site-title">
+            Story Echoes... Echo your imagination, one story at a time.
+          </h2>
+          <h4 className="about-site-desc">
+            Create, read, and explore stories like never before! This site lets
+            kids craft their own books by doodling covers, adding images,
+            recording their voices, and even turning their stories into awesome
+            AI art. Plus, if reading's tricky, they can listen to the book being
+            narrated! It’s a magical mix of creativity, tech, and fun!
+          </h4>
           <h3>Meet the team!</h3>
           <ul className="about-list-items">
             <li>
