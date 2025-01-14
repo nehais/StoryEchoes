@@ -703,7 +703,7 @@ const AddStory = () => {
 
         // Set success message and navigate to the story read page
         setBeeSubmitMessage(
-          "🐝 Hooray! Your story has been submitted successfully!"
+          "Hooray! Your story has been submitted successfully!"
         );
         setIsStoryAdded(true);
         //Indicate Context API for refresh

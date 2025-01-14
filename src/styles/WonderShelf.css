@@ -80,6 +80,7 @@
 /* Main container for WonderShelf */
 .wonder-shelf {
   height: 100%;
+  width: 100vw;
   font-family: Arial, sans-serif;
   text-align: center;
 }
@@ -236,6 +237,20 @@
   width: 250px;
 }
 
+/*Tablet Screen -820*/
+@media only screen and (min-device-width: 769px) {
+  .story-list-view {
+    margin-top: 8%;
+  }
+}
+
+/*Tablet Screen -820*/
+@media only screen and (max-device-width: 768px) {
+  .story-list-view {
+    margin-top: 22%;
+  }
+}
+
 /*Mobile Screen*/
 @media screen and (max-device-width: 425px) {
   .wonder-shelf {
@@ -268,5 +283,9 @@
 
   .empty-fav-msg {
     font-size: 1.5em;
+  }
+
+  .story-list-view {
+    margin-top: 30%;
   }
 }
