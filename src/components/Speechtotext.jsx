@@ -115,7 +115,7 @@ const SpeechToTextModal = React.memo(({ isVisible, onClose, onSubmit }) => {
   if (!isVisible) return null;
 
   return (
-    <div className="speech-to-text-modal-container">
+    <div className="modal-container">
       <div className="speech-to-text-modal">
         <h2>Speech-to-Text</h2>
         <textarea
@@ -143,7 +143,7 @@ const SpeechToTextModal = React.memo(({ isVisible, onClose, onSubmit }) => {
             >
               <button
                 onClick={startListening}
-                className="speech-to-text-buttons"
+                className="modal-button"
                 style={{ backgroundColor: "#28a745" }}
                 isVisible={isRecording}
               >
@@ -161,7 +161,7 @@ const SpeechToTextModal = React.memo(({ isVisible, onClose, onSubmit }) => {
             >
               <button
                 onClick={stopListening}
-                className="speech-to-text-buttons"
+                className="modal-button"
                 style={{ backgroundColor: "#ffc107" }}
               >
                 Stop Listening
@@ -171,7 +171,7 @@ const SpeechToTextModal = React.memo(({ isVisible, onClose, onSubmit }) => {
 
           <button
             onClick={handleSubmit}
-            className="speech-to-text-buttons"
+            className="modal-button"
             style={{ backgroundColor: "#007BFF" }}
           >
             Submit
@@ -179,7 +179,7 @@ const SpeechToTextModal = React.memo(({ isVisible, onClose, onSubmit }) => {
 
           <button
             onClick={handleCancel}
-            className="speech-to-text-buttons"
+            className="modal-button"
             style={{ backgroundColor: "#dc3545" }}
           >
             Cancel

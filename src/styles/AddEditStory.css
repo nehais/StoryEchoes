@@ -33,7 +33,7 @@ body,
   max-height: 80vh;
   margin: 0px auto;
   padding: 0 20px 20px 20px;
-  background: url("../assets/back-stars.png") center/cover no-repeat;
+  background: url("../assets/blury.jpg") center/cover no-repeat;
   border-radius: 20px;
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
   overflow-y: auto; /* Enable vertical scrolling */
@@ -647,7 +647,7 @@ body,
   border-radius: 4px;
 }
 
-.speech-to-text-modal-container {
+.modal-container {
   position: fixed;
   top: 0;
   left: 0;
@@ -685,12 +685,19 @@ body,
   }
 }
 
-.speech-to-text-buttons {
+.modal-button {
   padding: 10px 20px;
   font-size: 14px;
   margin: 0 5px;
   color: white;
   border: none;
+}
+
+.doodle-modal {
+  width: 600px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
 }
 
 /* Responsive Design */

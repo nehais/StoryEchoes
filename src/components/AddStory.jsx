@@ -28,7 +28,6 @@ const AddStory = () => {
   const [isStoryAdded, setIsStoryAdded] = useState(false);
   const [currentPageIndex, setCurrentPageIndex] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false); // Control modal visibility
-  const [pageToDelete, setPageToDelete] = useState(null);
   const frontCoverFileRef = useRef([]);
   const [title, setTitle] = useState("");
   const [imageGenerated, setImageGenerated] = useState(false);
