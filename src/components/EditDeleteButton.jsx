@@ -30,7 +30,7 @@ const EditDeleteButton = ({ story }) => {
     }
 
     //Navigate to the edit page for the story
-    navigate(`/editStory/${story._id ? story._id : story.id}`);
+    navigate(`/editStory/${story._id}`);
   }
 
   function checkDelete(e) {
@@ -46,7 +46,7 @@ const EditDeleteButton = ({ story }) => {
   function onDelete() {
     //Call Delete API to delete the story
     axios
-      .delete(`${API_URL}/stories/${story.id}`)
+      .delete(`${API_URL}/stories/${story._id}`)
       .then(() => {
         //Indicate Context API for refresh
         setRefresh((prev) => prev + 1);

@@ -35,17 +35,19 @@ const StoryGridView = ({ filteredBooks, mode }) => {
 
     if (!user) return;
 
-    if (userDetails.bookIds.includes(story.id)) {
+    if (userDetails.bookIds.includes(story._id)) {
       // Disliked the book
-      userDetails.bookIds = userDetails.bookIds.filter((id) => id !== story.id);
+      userDetails.bookIds = userDetails.bookIds.filter(
+        (id) => id !== story._id
+      );
     } else {
       // Liked the book
-      userDetails.bookIds.push(story.id);
+      userDetails.bookIds.push(story._id);
     }
 
     //Call Update function & update the story like
     axios
-      .put(`${API_URL}/users/${userDetails.id}`, userDetails)
+      .put(`${API_URL}/users/${userDetails._id}`, userDetails)
       .then(({ data }) => {
         setUserDetails(data);
       })
@@ -79,8 +81,8 @@ const StoryGridView = ({ filteredBooks, mode }) => {
 
         {/* Display book cards with cover, title & author */}
         {listBooks.map((story) => (
-          <div key={story.id} className="story-item">
-            <Link to={`/readStory/${story._id ? story._id : story.id}`}>
+          <div key={story._id} className="story-item">
+            <Link to={`/readStory/${story._id}`}>
               <div className="story-card">
                 <img src={story.front_cover} alt={`${story.title} Tile`} />
                 <h2>{story.title}</h2>

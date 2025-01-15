@@ -23,7 +23,7 @@ function StoriesProviderWrapper(props) {
         if (userDetails.bookIds && data.length > 0) {
           let checkLikedStories = data.map((oneStory) => {
             oneStory.liked = false;
-            if (userDetails.bookIds.includes(oneStory.id)) {
+            if (userDetails.bookIds.includes(oneStory._id)) {
               oneStory.liked = true;
             }
             return oneStory;

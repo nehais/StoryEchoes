@@ -66,7 +66,7 @@ const ReadStory = () => {
         const { data } = await axios.get(`${API_URL}/stories/${id}`);
 
         data.liked = false;
-        if (userDetails.bookIds && userDetails.bookIds.includes(data.id)) {
+        if (userDetails.bookIds && userDetails.bookIds.includes(data._id)) {
           data.liked = true; //Set the like indicator on book
         }
 
@@ -89,7 +89,7 @@ const ReadStory = () => {
   useEffect(() => {
     if (story) {
       story.liked = false;
-      if (userDetails.bookIds && userDetails.bookIds.includes(story.id)) {
+      if (userDetails.bookIds && userDetails.bookIds.includes(story._id)) {
         story.liked = true; //Set the like indicator on book
       }
       setStory({ ...story });
@@ -103,7 +103,7 @@ const ReadStory = () => {
     story.readCount = story.readCount ? story.readCount + 1 : 1;
 
     axios
-      .put(`${API_URL}/stories/${story.id}`, story)
+      .put(`${API_URL}/stories/${story._id}`, story)
       .then(() => {
         //Indicate Context API for refresh
         setRefresh((prev) => prev + 1);

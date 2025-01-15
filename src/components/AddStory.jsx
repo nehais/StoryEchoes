@@ -710,11 +710,7 @@ const AddStory = () => {
         setRefresh((prev) => prev + 1);
 
         setTimeout(() => {
-          navigate(
-            `/readStory/${
-              responseData._id ? responseData._id : responseData.id
-            }?state=new`
-          );
+          navigate(`/readStory/${responseData._id}?state=new`);
         }, 2000);
       } else {
         // Handle server errors

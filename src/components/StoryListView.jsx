@@ -45,10 +45,7 @@ const StoryListView = ({ filteredBooks, mode }) => {
         )}
 
         {listBooks.map((story) => (
-          <Link
-            to={`/readStory/${story._id ? story._id : story.id}`}
-            key={story.id}
-          >
+          <Link to={`/readStory/${story._id}`} key={story._id}>
             <ActionBar story={story} mode={mode}></ActionBar>
           </Link>
         ))}
