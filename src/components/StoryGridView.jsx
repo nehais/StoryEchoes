@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import { useUsers } from "../contexts/user.context.jsx";
+import { useStories } from "../contexts/stories.context.jsx";
 import axios from "axios";
 import { API_URL } from "../config/apiConfig.js";
 
@@ -16,6 +17,7 @@ import Tooltip from "react-bootstrap/Tooltip";
 
 const StoryGridView = ({ filteredBooks, mode }) => {
   const { user, userDetails, setUserDetails } = useUsers(); //Fetched stories in Context API
+  const { setRefresh } = useStories(); //Fetched stories in Context API
 
   const [listBooks, setListBooks] = useState([]);
 
@@ -49,7 +51,9 @@ const StoryGridView = ({ filteredBooks, mode }) => {
     axios
       .put(`${API_URL}/users/${userDetails._id}`, userDetails)
       .then(({ data }) => {
-        setUserDetails(data);
+        setUserDetails(userDetails);
+        //Indicate Context API for refresh to refresh the like on the book
+        setRefresh((prev) => prev + 1);
       })
       .catch((error) =>
         console.log("Error during story update Story Like:", error)
