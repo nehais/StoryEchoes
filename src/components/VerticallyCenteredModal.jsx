@@ -10,12 +10,10 @@ function VerticallyCenteredModal({
   onDelete,
 }) {
   const handleClose = (e) => {
-    e.preventDefault();
     setShow(false);
   };
 
   const handleDelete = (e) => {
-    e.preventDefault();
     onDelete();
     handleClose();
   };
