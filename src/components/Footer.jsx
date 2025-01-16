@@ -7,7 +7,7 @@ import DeleteToast from "./DeleteToast.jsx";
 const Footer = () => {
   return (
     <div className="footer">
-      <Link to="https://github.com/priya337/StoryEchoes.git">
+      <Link to="https://github.com/nehais/StoryEchoes">
         <img src={githubLogo} alt="GitHub" className="github-logo" />
         <img src={openIcon} alt="Open Icon" className="open-icon" />
       </Link>
