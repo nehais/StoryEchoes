@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import annyang from "annyang";
 
+import Button from "react-bootstrap/Button";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 
@@ -141,14 +142,14 @@ const SpeechToTextModal = React.memo(({ isVisible, onClose, onSubmit }) => {
                 </Tooltip>
               }
             >
-              <button
+              <Button
                 onClick={startListening}
                 className="modal-button"
-                style={{ backgroundColor: "#28a745" }}
+                variant="success"
                 isVisible={isRecording}
               >
                 Start Listening
-              </button>
+              </Button>
             </OverlayTrigger>
           )}
 
@@ -159,31 +160,31 @@ const SpeechToTextModal = React.memo(({ isVisible, onClose, onSubmit }) => {
                 <Tooltip id="stop-tooltip"> Stop your story narration!</Tooltip>
               }
             >
-              <button
+              <Button
                 onClick={stopListening}
                 className="modal-button"
                 style={{ backgroundColor: "#ffc107" }}
               >
                 Stop Listening
-              </button>
+              </Button>
             </OverlayTrigger>
           )}
 
-          <button
+          <Button
             onClick={handleSubmit}
             className="modal-button"
-            style={{ backgroundColor: "#007BFF" }}
+            variant="primary"
           >
             Submit
-          </button>
+          </Button>
 
-          <button
+          <Button
             onClick={handleCancel}
             className="modal-button"
-            style={{ backgroundColor: "#dc3545" }}
+            variant="danger"
           >
             Cancel
-          </button>
+          </Button>
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import Button from "react-bootstrap/Button";
 
 // Helper to convert Data URL to Blob
 const dataURLToBlob = (dataUrl) => {
@@ -75,20 +76,20 @@ const Doodle = ({ isOpen, onClose, onSave }) => {
           onMouseLeave={stopDrawing}
         />
         <div style={{ marginTop: "10px", textAlign: "center" }}>
-          <button
+          <Button
             onClick={onClose} // This now calls the `onClose` method to close the modal
             className="modal-button"
-            style={{ backgroundColor: "#f44336" }}
+            variant="danger"
           >
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={saveDoodle}
             className="modal-button"
-            style={{ backgroundColor: "#4CAF50" }}
+            variant="success"
           >
             Save & Close
-          </button>
+          </Button>
         </div>
       </div>
     </div>
