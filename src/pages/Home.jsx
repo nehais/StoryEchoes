@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
-    <Link to="wonderShelf">
+    <Link to="/wonderShelf/?mode=Edit">
       <div className="home">
         <h2 className="type-writer">
           Echo your imagination, one story at a time.
