@@ -82,12 +82,23 @@ The website is designed keeping the main elements in focus, so it's easier to un
 
 ## How to setup the project
 
-- Git clone the below project</br>
-  https://github.com/nehais/StoryEchoes.git
+- Git clone the below project
 
-- run "npm i" to install the packages
+```bash
+  git clone https://github.com/nehais/StoryEchoes.git
+```
 
-- run "npm run dev"
+- install the packages
+
+```bash
+  npm i
+```
+
+- run the application
+
+```bash
+  npm run dev
+```
 
 # APIs
 
